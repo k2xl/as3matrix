@@ -9,6 +9,7 @@ package src
 		public var transposeCache:Matrix;
 		public var inverseCache:Matrix;
 		public var rowReducedCache:Matrix;
+		public var kernalCache:Matrix;
 		public function MatrixCache()
 		{
 			eigenvaluesCache = null;
@@ -18,6 +19,8 @@ package src
 			transposeCache = null;
 			inverseCache = null;
 			rowReducedCache = null;
+			kernalCache = null;
+			
 		}
 
 	}

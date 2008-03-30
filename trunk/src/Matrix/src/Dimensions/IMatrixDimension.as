@@ -18,5 +18,7 @@ package src.Dimensions
 		function multiply(Matrices:Array):Matrix;
 		function rowReduced():Matrix;
 		function singularValueDecomposition():SVD
+		function kernal():Matrix
+		function solve(B:Matrix):Matrix
 	}
 }

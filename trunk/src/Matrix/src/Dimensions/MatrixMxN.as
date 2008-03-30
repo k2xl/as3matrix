@@ -66,7 +66,8 @@ package src.Dimensions
 		public function rowReduced():Matrix
 		{
 			var A:Matrix = MatrixReference.clone();
-			var N:int  = A.numRows();
+			var N:int  = A.numRows();			
+			var M:int = A.numColumns();
 			for (var p:int=0; p<N; p++) 
 			{
 				var max:int = p;
@@ -86,7 +87,7 @@ package src.Dimensions
 			  	{
 			    	var alpha:Number = A.getElement(i,p) / A.getElement(p,p);
 			    	//trace("Subtracting "+alpha+" * row "+p+" from row "+i) // Uncomment to log actions
-			    	for (var j:int = p; j < N; j++)
+			    	for (var j:int = p; j < M; j++)
 			    	{
 			    		var newVal:Number = A.getElement(i,j)-alpha*A.getElement(p,j);
 			    		A.setElement(i,j, newVal);
@@ -96,6 +97,23 @@ package src.Dimensions
 			return A;
 		}
 		
+		public function kernal():Matrix
+		{
+			var tempR:int = MatrixReference.numRows();
+			var vec:Vector = new Vector();
+			for (var i:int = 0; i < tempR ; i++)
+			{
+				vec.push(0);
+			}
+			var M:Matrix = new Matrix();
+			M.addVector(vec);
+			M.lock();
+			return solve(M);
+		}
+		public function solve(B:Matrix):Matrix
+		{
+			return new Matrix(); 
+		}
 		public function inverse():Matrix
 		{
 			return new Matrix();
@@ -160,18 +178,19 @@ package src.Dimensions
 			// m.rows,columns
 			var newMatrix:Matrix = new Matrix();
 			var rows:int = MatrixReference.numRows();
-			for (var row:int = 0; row < rows; row++)
+			var tempC:int = m.numColumns();
+			for (var col:int = 0; col < tempC; col++)
 			{
-				var currentRow:Vector = MatrixReference.getRow(row);
 				var newColumn:Vector = new Vector();
-				var tempC:int = m.numColumns();
-				for (var col:int = 0; col < tempC; col++)
+				var currentColumn:Vector = m.getColumn(col);
+				for (var row:int = 0; row < rows; row++)
 				{
-					var val:Number = currentRow.dot(m.getColumn(col));
+					var val:Number = MatrixReference.getRow(row).dot(currentColumn);
 					newColumn.push(val);
 				}
 				newMatrix.addVector(newColumn);
 			}
+			newMatrix.lock();
 			return newMatrix;
 		}
 		/**
@@ -208,6 +227,7 @@ package src.Dimensions
 				}
 				newMatrix.addVector(newColumn);
 			}
+			newMatrix.lock();
 			return newMatrix;
 		}
 		private function subtractSingle(m:Matrix):Matrix

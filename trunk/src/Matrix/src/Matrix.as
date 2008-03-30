@@ -79,6 +79,7 @@ package src
 			}
 			locked = true;
 		}
+		
 		private function updateRowVectors():void
 		{
 			rowVectors = new Array();
@@ -119,6 +120,15 @@ package src
 			Cache = new MatrixCache();
 			
 			locked = false;
+		}
+		public function kernal():Matrix
+		{
+			if (Cache.kernalCache != null)
+			{
+				return Cache.kernalCache;
+			}
+			Cache.kernalCache = MatrixDimension.kernal();
+			return Cache.kernalCache;
 		}
 		public function determinant():Number
 		{
@@ -209,6 +219,10 @@ package src
 		{
 			return MatrixDimension.multiply(Matrices);
 		}
+		public function solve(B:Matrix):Matrix
+		{
+			return MatrixDimension.solve(B);
+		}
 		public function getRow(rowIndex:int):Vector
 		{
 			return rowVectors[rowIndex];
@@ -262,6 +276,26 @@ package src
 				s+=(rowVectors[i].toString())+"\n";
 			}
 			return s;
+		}
+		public static function identity(size:int = 2):Matrix
+		{
+			var m:Matrix = new Matrix();
+			for (var i:int = 0; i < size; i++)
+			{
+				var v:Vector = new Vector();
+				for (var g:int = 0; g < i; g++)
+				{
+					v.push(0);
+				}
+				v.push(1);
+				for (g; g < size-1; g++)
+				{
+					v.push(0);
+				}
+				m.addVector(v);
+			}
+			m.lock();
+			return m;
 		}
 	}
 }

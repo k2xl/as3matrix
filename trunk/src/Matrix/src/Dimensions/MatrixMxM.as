@@ -19,5 +19,10 @@ package src.Dimensions
 			}
 			return product;
 		}
+		public override function solve(B:Matrix):Matrix
+		{
+			var m:Matrix = MatrixReference.inverse();
+			return (m.multiply(B));
+		}
 	}
 }
