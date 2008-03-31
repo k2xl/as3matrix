@@ -1,5 +1,6 @@
 /**
  * A Matrix class to make matrix operations easier.
+ * Caches results to a MatrixCache object.
  * @author Danny Miller
  * @date 2008
  */
