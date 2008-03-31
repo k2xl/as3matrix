@@ -1,9 +1,7 @@
 package {
-	import flash.display.Sprite;
-	
+	import flash.display.Sprite;	
 	import src.Matrix;
 	import src.Vector;
-
 	public class Test extends Sprite
 	{
 		public function Test()
@@ -12,7 +10,6 @@ package {
 			m.addVector(new Vector(1,2));
 			m.addVector(new Vector(3,4));
 			m.lock();
-			
 			m.inverse();
 			var B:Matrix = new Matrix();
 			B.addVector(new Vector(9,2,3));
