@@ -116,7 +116,7 @@ package src.Dimensions
 		}
 		public function inverse():Matrix
 		{
-			return new Matrix();
+			throw new MatrixDimensionError("Cannot compute inverse of a non-square matrix");
 		}
 		public function transpose():Matrix
 		{
