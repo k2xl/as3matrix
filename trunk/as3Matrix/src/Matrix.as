@@ -52,6 +52,13 @@ package src
 			columns++;
 		}
 		/**
+		 * Clears the cache. Garbage collection should take care of clearing it from memory after a few frames.
+		 */
+		public function clearCache():void
+		{
+			Cache = new MatrixCache();
+		}
+		/**
 		 * This function generates the rowVector array. Should be called after all the vectors have been added.
 		 * Be sure to unlock the matrix before adding new vectors.
 		 */
