@@ -1,6 +1,8 @@
 package src.Dimensions
 {
 	import src.Decompositions.SVD;
+	import src.Decompositions.LU;
+	import src.Decompositions.QR;
 	import src.Matrix;
 	import src.Vector;
 	
