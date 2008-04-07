@@ -18,11 +18,11 @@ package src.Dimensions
 		}
 		public function eigenValues():Vector
 		{
-			return new Vector(0);
+			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors.");
 		}
 		public function eigenVectors():Matrix
 		{
-			return new Matrix();	
+			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors.");
 		}
 		public function singularValueDecomposition():SVD
 		{
