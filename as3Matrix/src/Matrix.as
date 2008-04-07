@@ -181,7 +181,11 @@ package src
 		}
 		public function equals(other:Matrix):Boolean
 		{
-			return MatrixDimension.equals(other);
+			if (numColumns() != other.numColumns() && numRows() != other.numRows())
+			{
+				return false;
+			}
+			return MatrixDimension.equals(other.MatrixDimension);
 		}
 		public function getElement(r:int,c:int):Number
 		{
