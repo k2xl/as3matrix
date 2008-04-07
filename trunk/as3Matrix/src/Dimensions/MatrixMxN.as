@@ -30,7 +30,7 @@ package src.Dimensions
 		{
 			return MatrixReference.equals(MatrixReference.transpose());
 		}
-		public function equals(other:Matrix):Boolean
+		public function equals(other:IMatrixDimension):Boolean
 		{
 			return true;
 		}

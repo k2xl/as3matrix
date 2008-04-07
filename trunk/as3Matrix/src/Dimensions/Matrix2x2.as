@@ -6,17 +6,27 @@ package src.Dimensions
 	
 	public class Matrix2x2 extends MatrixMxM
 	{
+		private var a:Number;
+		private var b:Number;
+		private var c:Number;
+		private var d:Number;
+
 		public function Matrix2x2(ref:Matrix)
 		{
 			super(ref);
+			 a = MatrixReference.getColumn(0).getIndex(0);
+			 b = MatrixReference.getColumn(1).getIndex(0);
+			 c = MatrixReference.getColumn(0).getIndex(1);
+			 d = MatrixReference.getColumn(1).getIndex(1);
 		}
 		public override function determinant():Number
 		{
-			var a:Number = MatrixReference.getColumn(0).getIndex(0);
-			var b:Number = MatrixReference.getColumn(1).getIndex(0);
-			var c:Number = MatrixReference.getColumn(0).getIndex(1);
-			var d:Number = MatrixReference.getColumn(1).getIndex(1);
 			return a*d-b*c;
+		}
+		public override function equals(other:IMatrixDimension):Boolean
+		{
+			var type:Matrix2x2 = other as Matrix2x2;
+			return type.a==a&&type.b==b&&type.c==c&&type.d==d;
 		}
 		public override function inverse():Matrix
 		{
