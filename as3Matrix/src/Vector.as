@@ -72,6 +72,7 @@ package src
 			return newVec;
 		}
 		
+		
 		public function subtractVector(other:Vector):Vector
 		{
 			if (size() != other.size())
@@ -106,6 +107,16 @@ package src
 			}
 			return newVec;
 		}
+		
+		public function equals(v:Vector):Boolean{
+			for(var i:Object in this.vec){
+				if(this.vec[i] != v.vec[i]){
+					return false;
+				}
+			}
+			return true;
+		}
+		
 		public function size():int
 		{
 			return vec.length;

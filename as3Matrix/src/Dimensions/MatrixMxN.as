@@ -26,12 +26,22 @@ package src.Dimensions
 		{
 			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors.");
 		}
+
 		public function isSymmetric():Boolean
 		{
 			return MatrixReference.equals(MatrixReference.transpose());
 		}
+		
 		public function equals(other:IMatrixDimension):Boolean
-		{
+		{			
+			var orig:Array = MatrixReference.getColumnVectors()
+			var temp:Array = Matrix(other).getColumnVectors();
+			
+			for(var i:Object in orig){
+				if(!Vector(orig[i]).equals(Vector(temp[i]))){
+					return false;
+				}
+			}
 			return true;
 		}
 		public function QRDecomposition():QR
@@ -58,6 +68,9 @@ package src.Dimensions
 
 			return Decomp;	
 		}
+		
+
+		
 		public function singularValues():Vector
 		{
 			var newMatrix:Matrix = new Matrix();
