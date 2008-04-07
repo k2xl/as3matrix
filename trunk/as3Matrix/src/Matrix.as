@@ -179,6 +179,7 @@ package src
 			Cache.singularvaluesCache = MatrixDimension.singularValues(); 
 			return Cache.singularvaluesCache;
 		}
+		
 		public function getElement(r:int,c:int):Number
 		{
 			 return getRow(r).getIndex(c);
