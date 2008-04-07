@@ -49,7 +49,7 @@ package src.Dimensions
 			var c:Number = MatrixReference.getColumn(0).getIndex(1);
 			var d:Number = MatrixReference.getColumn(1).getIndex(1);
 			var L1:Number = ( (a+d)/2 ) + Math.sqrt( 4*b*c + ((a-d)*(a-d)))/2;
-			var L1:Number = ( (a+d)/2 ) - Math.sqrt( 4*b*c + ((a-d)*(a-d)))/2;
+			var L2:Number = ( (a+d)/2 ) - Math.sqrt( 4*b*c + ((a-d)*(a-d)))/2;
 			return new Vector(L1,L2);
 		}
 		public override function eigenVectors():Matrix
