@@ -19,7 +19,6 @@ package {
 			B.addVector(new Vector(2,5,4));
 			B.addVector(new Vector(-1,5,33));
 			B.lock();
-			trace(m.equals(m));
 			trace("Trace: "+m.eigenvalues());
 			
 /**
