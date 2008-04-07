@@ -36,18 +36,6 @@ package src.Dimensions
 			temp.lock();
 			return temp;
 		}
-		
-		/**
-		 * Returns the trace of a 2x2 Matrix
-		 */
-		 /*Need to come up with better name for method should be Trace
-		 	but trace is a name of a method*/
-		 
-		private  function MatrixTrace():Number
-		{
-			var a:Number = MatrixReference.getColumn(0).getIndex(0)+ MatrixReference.getColumn(1).getIndex(1);
-			return a;
-		}
 			
 		/**
 		 * Calculates the eigenvalues of a 2x2 matrix
@@ -56,12 +44,12 @@ package src.Dimensions
 		public override function eigenValues():Vector
 		{
 			//Found a more efficent algorithem using the trace of a 2x2
-			var tr:Number = MatrixTrace();
-
-			var diff:Number = Math.sqrt(tr*tr-4*determinant());
-
-			var L1:Number = .5*(MatrixTrace()+diff);
-			var L2:Number = .5*(MatrixTrace()-diff);
+			var a:Number = MatrixReference.getColumn(0).getIndex(0);
+			var b:Number = MatrixReference.getColumn(1).getIndex(0);
+			var c:Number = MatrixReference.getColumn(0).getIndex(1);
+			var d:Number = MatrixReference.getColumn(1).getIndex(1);
+			var L1:Number = ( (a+d)/2 ) + Math.sqrt( 4*b*c + ((a-d)*(a-d)))/2;
+			var L1:Number = ( (a+d)/2 ) - Math.sqrt( 4*b*c + ((a-d)*(a-d)))/2;
 			return new Vector(L1,L2);
 		}
 		public override function eigenVectors():Matrix
