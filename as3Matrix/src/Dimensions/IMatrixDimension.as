@@ -17,9 +17,11 @@ package src.Dimensions
 		function subtract(Matrices:Array):Matrix;
 		function multiply(Matrices:Array):Matrix;
 		function rowReduced():Matrix;
-		function singularValueDecomposition():SVD
-		function kernal():Matrix
-		function solve(B:Matrix):Matrix
+		function singularValueDecomposition():SVD;
+		function LUDecomposition():LU;
+		function QRDecomposition():QR;
+		function kernal():Matrix;
+		function solve(B:Matrix):Matrix;
 		
 	}
 }

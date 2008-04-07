@@ -24,6 +24,14 @@ package src.Dimensions
 		{
 			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors.");
 		}
+		public function QRDecomposition():Matrix
+		{
+			return null;
+		}
+		public function LUDecomposition():Matrix
+		{
+			return null;
+		}
 		public function singularValueDecomposition():SVD
 		{
 			var Decomp:SVD = new SVD();
