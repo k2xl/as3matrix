@@ -11,15 +11,13 @@ package {
 		{
 			var m:Matrix = new Matrix();
 			m.addVector(new Vector(1,2));
-			m.addVector(new Vector(3,4));
+			m.addVector(new Vector(1,4));
 			m.lock();
-			m.inverse();
 			var B:Matrix = new Matrix();
-			B.addVector(new Vector(9,2,3));
-			B.addVector(new Vector(2,5,4));
-			B.addVector(new Vector(-1,5,33));
+			B.addVector(new Vector(1,2));
+			B.addVector(new Vector(3,4));
 			B.lock();
-			trace("Trace: "+m.eigenvalues());
+			trace("Trace: "+m.equals(B));
 			
 /**
  * 1	2			1*5		1*6		2*5		2*6

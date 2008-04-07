@@ -253,6 +253,11 @@ package src
 			}
 			return vec;
 		}
+		
+		public function getColumnVectors():Array{
+			return columnVectors;
+		}
+		
 		private function getColumnFromRows(columnIndex:int):Vector
 		{
 			var vec:Vector = new Vector();
