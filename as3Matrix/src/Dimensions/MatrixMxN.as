@@ -1,5 +1,7 @@
 package src.Dimensions
 {
+	import src.Decompositions.LU;
+	import src.Decompositions.QR;
 	import src.Decompositions.SVD;
 	import src.Matrix;
 	import src.Vector;
@@ -24,11 +26,11 @@ package src.Dimensions
 		{
 			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors.");
 		}
-		public function QRDecomposition():Matrix
+		public function QRDecomposition():QR
 		{
 			return null;
 		}
-		public function LUDecomposition():Matrix
+		public function LUDecomposition():LU
 		{
 			return null;
 		}
