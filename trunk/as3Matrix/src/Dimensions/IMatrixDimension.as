@@ -1,8 +1,8 @@
 package src.Dimensions
 {
-	import src.Decompositions.SVD;
 	import src.Decompositions.LU;
 	import src.Decompositions.QR;
+	import src.Decompositions.SVD;
 	import src.Matrix;
 	import src.Vector;
 	
@@ -24,6 +24,7 @@ package src.Dimensions
 		function QRDecomposition():QR;
 		function kernal():Matrix;
 		function solve(B:Matrix):Matrix;
-		
+		function equals(other:Matrix):Boolean;
+		function isSymmetric():Boolean;
 	}
 }
