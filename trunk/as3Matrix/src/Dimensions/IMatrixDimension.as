@@ -20,5 +20,6 @@ package src.Dimensions
 		function singularValueDecomposition():SVD
 		function kernal():Matrix
 		function solve(B:Matrix):Matrix
+		
 	}
 }

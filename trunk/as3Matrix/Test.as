@@ -19,7 +19,7 @@ package {
 			B.addVector(new Vector(2,5,4));
 			B.addVector(new Vector(-1,5,33));
 			B.lock();
-			trace("Determinant: "+m.determinant());
+			trace("Trace: "+m.eigenvalues());
 			
 /**
  * 1	2			1*5		1*6		2*5		2*6

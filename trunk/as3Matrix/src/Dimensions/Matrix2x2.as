@@ -36,21 +36,32 @@ package src.Dimensions
 			temp.lock();
 			return temp;
 		}
+		
+		/**
+		 * Returns the trace of a 2x2 Matrix
+		 */
+		 /*Need to come up with better name for method should be Trace
+		 	but trace is a name of a method*/
+		 
+		private  function MatrixTrace():Number
+		{
+			var a:Number = MatrixReference.getColumn(0).getIndex(0)+ MatrixReference.getColumn(1).getIndex(1);
+			return a;
+		}
+			
 		/**
 		 * Calculates the eigenvalues of a 2x2 matrix
 		 * @return The eigenvalues
 		 */
 		public override function eigenValues():Vector
 		{
-			var a:Number = MatrixReference.getColumn(0).getIndex(0);
-			var d:Number = MatrixReference.getColumn(1).getIndex(1);
-			var T:Number = (a+d);
-			// multipling a Number by 0.5 is usually much faster than dividing by 2 in AS3
-			var Tavg:Number = T*.5;
-			var D:Number = determinant();
-			var val:Number = Math.sqrt((T*T)/4-D);
-			var L1:Number = Tavg + val;
-			var L2:Number = Tavg - val; 
+			//Found a more efficent algorithem using the trace of a 2x2
+			var tr:Number = MatrixTrace();
+
+			var diff:Number = Math.sqrt(tr*tr-4*determinant());
+
+			var L1:Number = .5*(MatrixTrace()+diff);
+			var L2:Number = .5*(MatrixTrace()-diff);
 			return new Vector(L1,L2);
 		}
 		public override function eigenVectors():Matrix
