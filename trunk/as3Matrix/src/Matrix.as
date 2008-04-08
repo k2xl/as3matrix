@@ -51,6 +51,10 @@ package src
 			}
 			columns++;
 		}
+		public function jacobi():Matrix
+		{
+			return MatrixDimension.jacobi();
+		}
 		/**
 		 * Clears the cache. Garbage collection should take care of clearing it from memory after a few frames.
 		 */
@@ -231,6 +235,17 @@ package src
 		{
 			return MatrixDimension.subtract(Matrices);
 		}
+		public function multiplyScalar(n:Number):Matrix
+		{
+			var newMatrix:Matrix = new Matrix();
+			var c:int = numColumns();
+			for (var i:int = 0; i < c; i++)
+			{
+				newMatrix.addVector(this.getColumn(i).multiply(n));
+			} 
+			newMatrix.lock();
+			return newMatrix;
+		}
 		public function multiply(...Matrices):Matrix
 		{
 			return MatrixDimension.multiply(Matrices);
@@ -297,6 +312,10 @@ package src
 				s+=(rowVectors[i].toString())+"\n";
 			}
 			return s;
+		}
+		public function off():Number
+		{
+			return MatrixDimension.off();
 		}
 		public static function identity(size:int = 2):Matrix
 		{

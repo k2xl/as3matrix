@@ -26,12 +26,14 @@ package src.Dimensions
 		{
 			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors.");
 		}
-
 		public function isSymmetric():Boolean
 		{
 			return MatrixReference.equals(MatrixReference.transpose());
 		}
-		
+		public function jacobi():Matrix
+		{
+			throw new MatrixDimensionError("Can't run jacobi on non square matrix");
+		}
 		public function equals(other:IMatrixDimension):Boolean
 		{			
 			var orig:Array = MatrixReference.getColumnVectors()
@@ -109,10 +111,11 @@ package src.Dimensions
 			      		max = i;
 			  		}
 			  	}
-			  	if (Math.abs(A.getElement(p,p)) <= 1e-10) 
+			  	/*if (Math.abs(A.getElement(p,p)) <= 1e-10) 
 			  	{
+			  		trace("Singular!");
 			  		return null; // Matrix is singular	
-			  	}
+			  	}*/
 			  	// pivot within A and b
 			  	for (i = p+1; i < N; i++) 
 			  	{
@@ -196,7 +199,7 @@ package src.Dimensions
 			var newMatrix:Matrix = MatrixReference;
 			for (var i:int = 0 ; i < tempS;i++)
 			{
-				newMatrix = func.call(newMatrix,Matrices[i]); // I can call private method since I'm in this class.
+				newMatrix = func.call(newMatrix,Matrices[i]) as Matrix; // I can call private method since I'm in this class.
 			}
 			return newMatrix;
 		}
@@ -264,7 +267,7 @@ package src.Dimensions
 		private function subtractSingle(m:Matrix):Matrix
 		{
 			var rows:int = MatrixReference.numRows();
-			if (MatrixReference.numColumns() != m.numColumns() || rows != m.numRows())
+			if (MatrixReference.numColumns() != m.numColumns() || MatrixReference.numRows() != m.numRows())
 			{
 				return null;
 			}
@@ -281,7 +284,12 @@ package src.Dimensions
 				}
 				newMatrix.addVector(newColumn);
 			}
+			newMatrix.lock();
 			return newMatrix;
+		}
+		public function off():Number
+		{
+			throw new MatrixDimensionError("Can't compute off of non-square matrix");
 		}
 	}
 }

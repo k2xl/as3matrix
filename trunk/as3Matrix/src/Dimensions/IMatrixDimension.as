@@ -26,5 +26,7 @@ package src.Dimensions
 		function solve(B:Matrix):Matrix;
 		function equals(other:IMatrixDimension):Boolean;
 		function isSymmetric():Boolean;
+		function jacobi():Matrix;
+		function off():Number;
 	}
 }
