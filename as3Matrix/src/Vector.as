@@ -116,7 +116,17 @@ package src
 			}
 			return true;
 		}
-		
+		public function normalize():Vector
+		{
+			var temp:Vector = clone();
+			var sum:Number = 0;
+			var tempS:int = size();
+			for (var i:int = 0; i < tempS; i++)
+			{
+				sum+=this.vec[i]*this.vec[i];
+			}
+			return temp.multiply(1/Math.sqrt(sum));
+		}
 		public function size():int
 		{
 			return vec.length;

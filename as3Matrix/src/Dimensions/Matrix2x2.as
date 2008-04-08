@@ -46,7 +46,7 @@ package src.Dimensions
 			temp.lock();
 			return temp;
 		}
-			
+		
 		/**
 		 * Calculates the eigenvalues of a 2x2 matrix
 		 * @return The eigenvalues
@@ -54,10 +54,6 @@ package src.Dimensions
 		public override function eigenValues():Vector
 		{
 			//Found a more efficent algorithem using the trace of a 2x2
-			var a:Number = MatrixReference.getColumn(0).getIndex(0);
-			var b:Number = MatrixReference.getColumn(1).getIndex(0);
-			var c:Number = MatrixReference.getColumn(0).getIndex(1);
-			var d:Number = MatrixReference.getColumn(1).getIndex(1);
 			var L1:Number = ( (a+d)/2 ) + Math.sqrt( 4*b*c + ((a-d)*(a-d)))/2;
 			var L2:Number = ( (a+d)/2 ) - Math.sqrt( 4*b*c + ((a-d)*(a-d)))/2;
 			return new Vector(L1,L2);
@@ -68,17 +64,22 @@ package src.Dimensions
 			var eigenvals:Vector = eigenValues(); // will retrieve from cache if already calculated.
 			if (c != 0)
 			{
-				newMatrix.addVector(new Vector(eigenvals.getIndex(0)-d,c));
-				newMatrix.addVector(new Vector(eigenvals.getIndex(1)-d,c));
-				return newMatrix;
+				newMatrix.addVector((new Vector(eigenvals.getIndex(0)-d,c)).normalize());
+				newMatrix.addVector((new Vector(eigenvals.getIndex(1)-d,c)).normalize());
 			}
 			else if (b != 0)
 			{
-				newMatrix.addVector(new Vector(eigenvals.getIndex(0)-b,d));
-				newMatrix.addVector(new Vector(eigenvals.getIndex(1)-b,d));
-				return newMatrix;
+				newMatrix.addVector((new Vector(b,eigenvals.getIndex(0)-d)).normalize());
+				newMatrix.addVector((new Vector(b,eigenvals.getIndex(1)-d)).normalize());
 			}
+			else
+			{
+				newMatrix.addVector(new Vector(1,0));
+				newMatrix.addVector(new Vector(0,1));
+			}
+			newMatrix.lock();
 			return newMatrix;
+			
 		}
 	}
 }
