@@ -65,9 +65,6 @@ package src.Dimensions
 		public override function eigenVectors():Matrix
 		{
 			var newMatrix:Matrix = new Matrix();
-			var b:Number = MatrixReference.getColumn(1).getIndex(0);
-			var c:Number = MatrixReference.getColumn(0).getIndex(1);
-			var d:Number = MatrixReference.getColumn(1).getIndex(1);
 			var eigenvals:Vector = eigenValues(); // will retrieve from cache if already calculated.
 			if (c != 0)
 			{
@@ -81,8 +78,6 @@ package src.Dimensions
 				newMatrix.addVector(new Vector(eigenvals.getIndex(1)-b,d));
 				return newMatrix;
 			}
-			newMatrix.addVector(new Vector(1,0));
-			newMatrix.addVector(new Vector(0,1));
 			return newMatrix;
 		}
 	}

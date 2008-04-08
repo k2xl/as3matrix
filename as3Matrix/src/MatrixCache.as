@@ -10,6 +10,8 @@ package src
 		public var inverseCache:Matrix;
 		public var rowReducedCache:Matrix;
 		public var kernalCache:Matrix;
+		public var L:Matrix;
+		public var U:Matrix;
 		public function MatrixCache()
 		{
 			eigenvaluesCache = null;

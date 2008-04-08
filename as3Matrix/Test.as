@@ -17,7 +17,8 @@ package {
 			B.addVector(new Vector(1,2));
 			B.addVector(new Vector(3,4));
 			B.lock();
-			trace("Trace: "+m.equals(B));
+			trace("Eigen Values: " +m.eigenvalues());
+			trace("Eigen Vectors: "+m.eigenvectors());
 			
 /**
  * 1	2			1*5		1*6		2*5		2*6
