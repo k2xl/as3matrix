@@ -23,9 +23,9 @@ package src.Dimensions
 		{
 			return a*d-b*c;
 		}
-		public override function equals(other:IMatrixDimension):Boolean
+		public override function equals(other:Matrix):Boolean
 		{
-			var type:Matrix2x2 = other as Matrix2x2;
+			var type:Matrix2x2 = other.MatrixDimension as Matrix2x2;
 			return type.a==a&&type.b==b&&type.c==c&&type.d==d;
 		}
 		public override function inverse():Matrix

@@ -34,10 +34,10 @@ package src.Dimensions
 		{
 			throw new MatrixDimensionError("Can't run jacobi on non square matrix");
 		}
-		public function equals(other:IMatrixDimension):Boolean
+		public function equals(other:Matrix):Boolean
 		{			
 			var orig:Array = MatrixReference.getColumnVectors()
-			var temp:Array = Matrix(other).getColumnVectors();
+			var temp:Array = other.getColumnVectors();
 			
 			for(var i:Object in orig){
 				if(!Vector(orig[i]).equals(Vector(temp[i]))){

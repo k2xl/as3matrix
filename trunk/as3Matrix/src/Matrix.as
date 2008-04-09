@@ -19,7 +19,7 @@ package src
 		private var rowVectors:Array;
 		private var columns:int;
 		private var rows:int;
-		private var MatrixDimension:IMatrixDimension;
+		public var MatrixDimension:IMatrixDimension;
 		//
 		public var Cache:MatrixCache;
 
@@ -167,7 +167,6 @@ package src
 				return Cache.eigenvectorsCache;
 			}
 			Cache.eigenvectorsCache = MatrixDimension.eigenVectors();
-			Cache.eigenvectorsCache.lock();
 			return Cache.eigenvectorsCache;
 		}
 		public function diagonalize():Matrix
@@ -189,7 +188,7 @@ package src
 			{
 				return false;
 			}
-			return MatrixDimension.equals(other.MatrixDimension);
+			return MatrixDimension.equals(other);
 		}
 		public function getElement(r:int,c:int):Number
 		{
