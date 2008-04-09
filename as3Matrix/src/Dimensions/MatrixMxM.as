@@ -2,6 +2,7 @@ package src.Dimensions
 {
 	import src.Matrix;
 	import src.Vector;
+	import src.errors.MatrixError;
 
 	public class MatrixMxM extends MatrixMxN
 	{
@@ -26,10 +27,14 @@ package src.Dimensions
 		 */
 		public override function diagonalize():Matrix
 		{
-			for (var i:int = 0; i < 10; i++)
+			if (!MatrixReference.equals(MatrixReference.transpose()))
+			{
+				throw new MatrixError("Cannot diagonalize a non symmetric matrix with jacobi");
+			}
+			for (var i:int = 0; i < 100; i++)
 			{
 				MatrixReference = MatrixReference.jacobi();
-				if (Math.abs(MatrixReference.off()) < 1e-9)
+				if (MatrixReference.off() < 1e-9)
 				{
 					break;
 				}
@@ -46,7 +51,7 @@ package src.Dimensions
 				for (var j:int = 0; j<c;j++)
 				{
 					if (i == j) break;
-					sum+=MatrixReference.getElement(i,j);
+					sum+=MatrixReference.getElement(i,j)*MatrixReference.getElement(i,j);
 				} 
 			}
 			return sum;
@@ -56,39 +61,45 @@ package src.Dimensions
 		{
 			// Check if already diagonal
 			var topLeft:Matrix = new Matrix();
-			var aindex:int = 0;
-			var bindex:int = 0;
-			var cindex:int = 0;
-			var dindex:int = 0;
+			var largestI:int = 0;
+			var largestJ:int = 0;
 			var size:int = MatrixReference.numColumns();
-			for (var i:int = 1; i < size; i++)
+			var currMax:Number = 0;
+			for (var j:int = 0; j < size; j++)
 			{
-				if (bindex*cindex == 0 && MatrixReference.getColumn(i).getIndex(0) != 0 || MatrixReference.getRow(i).getIndex(0) != 0)
+				for (var i:int = 0; i < size; i++)
 				{
-					bindex = i;
-					cindex = i;
-					dindex = i;
-					break;
+					if (i != j)
+					{
+						if (Math.abs(MatrixReference.getElement(i,j)) > currMax)
+						{
+							largestI = i;
+							largestJ = j;
+							currMax = MatrixReference.getColumn(i).getIndex(0);
+						}
+					}
 				}
 			}
-			var a:Number = MatrixReference.getElement(0,0);
-			var b:Number = MatrixReference.getElement(bindex,0);
-			var c:Number = MatrixReference.getElement(0,cindex);
-			var d:Number = MatrixReference.getElement(dindex,dindex);
+			var a:Number = MatrixReference.getElement(largestI,largestI);
+			var b:Number = MatrixReference.getElement(largestJ,largestI);
+			var c:Number = MatrixReference.getElement(largestI,largestJ);
+			var d:Number = MatrixReference.getElement(largestJ,largestJ);
 			
 			topLeft.addVector(new Vector(a,c));
 			topLeft.addVector(new Vector(b,d));
 			topLeft.lock();
-			var D:Matrix = topLeft.eigenvectors();
+			var U:Matrix = topLeft.eigenvectors();
 			var g:Matrix = Matrix.identity(size);
 			// embed D into m
-			g.setElement(0,0, D.getElement(0,0));
-			g.setElement(bindex, 0, D.getElement(1,0));
-			g.setElement(0, cindex, D.getElement(0,1));
-			g.setElement(dindex, dindex, D.getElement(1,1));
-			var gtAg:Matrix = g.transpose().multiply(this.MatrixReference);
-			gtAg = gtAg.multiply(g);
-			return gtAg;
+			g.setElement(largestI,largestI, U.getElement(0,0));
+			g.setElement(largestJ, largestI, U.getElement(0,1));
+			g.setElement(largestI, largestJ, U.getElement(1,0));
+			g.setElement(largestJ, largestJ, U.getElement(1,1));
+			
+			var D:Matrix = g.transpose().multiply(this.MatrixReference);
+			D = D.multiply(g);
+			
+			return D;
 		}
 		private function isDiagonal():Boolean
 		{

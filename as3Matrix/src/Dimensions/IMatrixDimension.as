@@ -24,7 +24,7 @@ package src.Dimensions
 		function QRDecomposition():QR;
 		function kernal():Matrix;
 		function solve(B:Matrix):Matrix;
-		function equals(other:IMatrixDimension):Boolean;
+		function equals(other:Matrix):Boolean;
 		function isSymmetric():Boolean;
 		function jacobi():Matrix;
 		function off():Number;
