@@ -11,26 +11,44 @@ package {
 		public function Test()
 		{
 			var sum:Number = 0;
-			for (var j:int = 0; j <10; j++)
+			var count:int = 1;
+			var m:Matrix;
+			for (var j:int = 0; j <count; j++)
 			{
-				var m:Matrix = getRandom();
-				for (var i:int = 0; i < 200; i++)
+				m = getRandom();
+				//var t:Matrix = m.clone();
+				for (var i:int = 0; i < 1000; i++)
 				{
 					m = m.jacobi();
-					//trace("M: \n"+m);
-					var o:Number = Math.abs(m.off());
+					var o:Number = m.off();
+					trace(i+"\t"+o);
 					if (o < 1e-9)
 					{
 						break;
 					}
 				}
-				if (i >= 250)
+				sum+=i;
+			}
+			trace("Average Sorting = "+sum/count);
+			/*
+			sum = 0;
+			count = 20;
+			for (j = 0; j <count; j++)
+			{
+				m = getRandom();
+				//var t:Matrix = m.clone();
+				for (i = 0; i < 1000; i++)
 				{
-					break;
+					m = m.jacobiNoSort();
+					o= m.off();
+					if (o < 1e-9)
+					{
+						break;
+					}
 				}
 				sum+=i;
 			}
-			trace("Average = "+sum/10);
+			trace("Average No Sorting = "+sum/count);*/
 			//trace("After "+(i+1)+" iterations... \n"+m);
 
 			//trace("Diagnolize:\n"+m.diagonalize());
@@ -98,7 +116,7 @@ package {
 			{
 				for (var p:int = n; p < size; p++)
 				{
-					var num:Number = Math.floor(Math.random()*100);
+					var num:Number = Math.floor(Math.random()*10);
 					m.setElement(n,p,num);
 					m.setElement(p,n,num);
 				}
