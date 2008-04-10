@@ -55,6 +55,10 @@ package src
 		{
 			return MatrixDimension.jacobi();
 		}
+		public function jacobiNoSort():Matrix
+		{
+			return MatrixDimension.jacobiNoSort();
+		}
 		/**
 		 * Clears the cache. Garbage collection should take care of clearing it from memory after a few frames.
 		 */

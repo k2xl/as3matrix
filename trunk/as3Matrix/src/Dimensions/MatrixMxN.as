@@ -34,6 +34,10 @@ package src.Dimensions
 		{
 			throw new MatrixDimensionError("Can't run jacobi on non square matrix");
 		}
+		public function jacobiNoSort():Matrix
+		{
+			throw new MatrixDimensionError("Can't run jacobi on non square matrix");
+		}
 		public function equals(other:Matrix):Boolean
 		{			
 			var orig:Array = MatrixReference.getColumnVectors()

@@ -62,10 +62,10 @@ package src.Dimensions
 			var largestI:int = 0;
 			var largestJ:int = 1;
 			var size:int = MatrixReference.numColumns();
-			var currMax:Number = 0;
-			for (var j:int = 0; j < size; j++)
-			{
-				for (var i:int = 0; i < size; i++)
+			var currMax:Number = MatrixReference.getElement(largestI,largestJ);
+			for (var i:int = 0; i < size; i++)
+			{			
+				for (var j:int = 0; j < size; j++)
 				{
 					if (i != j)
 					{
@@ -78,10 +78,16 @@ package src.Dimensions
 					}
 				}
 			}
-			var a:Number = MatrixReference.getElement(largestI,largestI);
-			var b:Number = MatrixReference.getElement(largestJ,largestI);
-			var c:Number = MatrixReference.getElement(largestI,largestJ);
-			var d:Number = MatrixReference.getElement(largestJ,largestJ);
+			/**
+			 * 	B(1,2) = randMatrix(maxRow, maxCol);
+		    	B(2,1) = randMatrix(maxRow, maxCol);
+		    	B(1,1) = randMatrix(maxRow, maxRow);
+		    	B(2,2) = randMatrix(maxCol, maxCol);
+		    */
+			var a:Number = MatrixReference.getElement(largestI,largestI); // 1,1
+			var b:Number = MatrixReference.getElement(largestI,largestJ); // 1,2
+			var c:Number = MatrixReference.getElement(largestJ,largestI); // 2,1
+			var d:Number = MatrixReference.getElement(largestJ,largestJ); // 2,2
 			var topLeft:Matrix = new Matrix();
 			topLeft.addVector(new Vector(a,c));
 			topLeft.addVector(new Vector(b,d));
@@ -89,10 +95,10 @@ package src.Dimensions
 			var U:Matrix = topLeft.eigenvectors();
 			var g:Matrix = Matrix.identity(size);
 			
-			g.setElement(largestI,largestI, U.getElement(0,0));
-			g.setElement(largestJ, largestI, U.getElement(0,1));
-			g.setElement(largestI, largestJ, U.getElement(1,0));
-			g.setElement(largestJ, largestJ, U.getElement(1,1));
+			g.setElement(largestI,largestI, U.getElement(0,0)); // a
+			g.setElement(largestI, largestJ, U.getElement(0,1)); // b
+			g.setElement(largestJ, largestI, U.getElement(1,0)); // c
+			g.setElement(largestJ, largestJ, U.getElement(1,1)); //d
 			
 			var D:Matrix = g.transpose().multiply(this.MatrixReference);
 			D = D.multiply(g);
@@ -112,31 +118,24 @@ package src.Dimensions
 				largestI = Math.floor(Math.random()*size);
 				largestJ = Math.floor(Math.random()*size);
 			}while (largestI == largestJ);
-			var a:Number = MatrixReference.getElement(largestI,largestI);
-			var b:Number = MatrixReference.getElement(largestJ,largestI);
-			var c:Number = MatrixReference.getElement(largestI,largestJ);
-			var d:Number = MatrixReference.getElement(largestJ,largestJ);
+			var a:Number = MatrixReference.getElement(largestI,largestI); // 1,1
+			var b:Number = MatrixReference.getElement(largestI,largestJ); // 1,2
+			var c:Number = MatrixReference.getElement(largestJ,largestI); // 2,1
+			var d:Number = MatrixReference.getElement(largestJ,largestJ); // 2,2
 			var topLeft:Matrix = new Matrix();
 			topLeft.addVector(new Vector(a,c));
 			topLeft.addVector(new Vector(b,d));
 			topLeft.lock();
-			/*trace("Current: "+MatrixReference);
-			trace("Top left: (maxRow,maxCol) = "+largestI+","+largestJ+"\n"+topLeft);
-			*/var U:Matrix = topLeft.eigenvectors();
+			var U:Matrix = topLeft.eigenvectors();
 			var g:Matrix = Matrix.identity(size);
-			//trace("U:\n"+U)
-			// embed U into m
-			/*trace("U: \n"+U);
-			trace("gi: \n"+g);*/
-			g.setElement(largestI,largestI, U.getElement(0,0));
-			g.setElement(largestJ, largestI, U.getElement(0,1));
-			g.setElement(largestI, largestJ, U.getElement(1,0));
-			g.setElement(largestJ, largestJ, U.getElement(1,1));
+			
+			g.setElement(largestI,largestI, U.getElement(0,0)); // a
+			g.setElement(largestI, largestJ, U.getElement(0,1)); // b
+			g.setElement(largestJ, largestI, U.getElement(1,0)); // c
+			g.setElement(largestJ, largestJ, U.getElement(1,1)); //d
 			
 			var D:Matrix = g.transpose().multiply(this.MatrixReference);
 			D = D.multiply(g);
-			//trace("g: \n"+g);
-			//trace("D: \n"+D);
 			
 			return D;
 		}

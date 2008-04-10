@@ -27,6 +27,7 @@ package src.Dimensions
 		function equals(other:Matrix):Boolean;
 		function isSymmetric():Boolean;
 		function jacobi():Matrix;
+		function jacobiNoSort():Matrix;
 		function off():Number;
 	}
 }
