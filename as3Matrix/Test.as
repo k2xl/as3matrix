@@ -1,7 +1,7 @@
 //test commit
 package {
 	
-	// Here's a test
+	
 	import flash.display.Sprite;
 	
 	import src.Matrix;
@@ -10,18 +10,27 @@ package {
 	{
 		public function Test()
 		{
+			var OffArr:Array = new Array();
+			var LN:Array = new Array();
 			var sum:Number = 0;
 			var count:int = 1;
+			var rand:Array = new Array();
+			for (var p:int = 0; p < count; p++)
+			{
+				rand.push(getRandom());
+			}
 			var m:Matrix;
 			for (var j:int = 0; j <count; j++)
 			{
-				m = getRandom();
-				//var t:Matrix = m.clone();
+				m = rand[j];
 				for (var i:int = 0; i < 1000; i++)
 				{
 					m = m.jacobi();
+					
 					var o:Number = m.off();
-					trace(i+"\t"+o);
+					OffArr.push(Math.log(o)/0.301029996);
+					var thy:Number = i*-0.105360516+Math.log(o)/0.301029996;
+					LN.push(thy);
 					if (o < 1e-9)
 					{
 						break;
@@ -30,9 +39,13 @@ package {
 				sum+=i;
 			}
 			trace("Average Sorting = "+sum/count);
-			/*
+			trace("K\tbK\tTheory Bound");
+			for (var k:int = 0; k < OffArr.length; k++)
+			{
+				trace(k+"\t"+OffArr[k]+"\t"+LN[k]);
+			}
+			
 			sum = 0;
-			count = 20;
 			for (j = 0; j <count; j++)
 			{
 				m = getRandom();
@@ -48,13 +61,14 @@ package {
 				}
 				sum+=i;
 			}
-			trace("Average No Sorting = "+sum/count);*/
+			trace("Average No Sorting = "+sum/count);
 			//trace("After "+(i+1)+" iterations... \n"+m);
 
 			//trace("Diagnolize:\n"+m.diagonalize());
 			
 			
 			
+
 			/*var st:int = getTimer();
 			var a:Matrix = new Matrix();
 			var b:Matrix = new Matrix();
