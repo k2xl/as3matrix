@@ -34,7 +34,7 @@ package src.Dimensions
 			for (var i:int = 0; i < 1000; i++)
 			{
 				MatrixReference = MatrixReference.jacobi();
-				if (MatrixReference.off() < 1e-9)
+				if (MatrixReference.off() < 1e-10)
 				{
 					break;
 				}
