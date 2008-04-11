@@ -41,6 +41,17 @@ package src.Dimensions
 			}
 			return MatrixReference;
 		}
+		public override function eigenValues():Vector
+		{
+			var e:Vector = new Vector();
+			var d:Matrix = MatrixReference.diagonalize();
+			var tempS:int = MatrixReference.numColumns();
+			for (var i:int = 0; i < tempS; i++)
+			{
+				e.push(MatrixReference.getElement(i,i));
+			}
+			return e;
+		}
 		public override function off():Number
 		{
 			var sum:Number = 0;

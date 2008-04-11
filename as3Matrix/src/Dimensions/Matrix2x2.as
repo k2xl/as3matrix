@@ -10,6 +10,7 @@ package src.Dimensions
 		private var b:Number;
 		private var c:Number;
 		private var d:Number;
+		
 
 		public function Matrix2x2(ref:Matrix)
 		{
@@ -46,6 +47,7 @@ package src.Dimensions
 			temp.lock();
 			return temp;
 		}
+		
 		
 		/**
 		 * Calculates the eigenvalues of a 2x2 matrix

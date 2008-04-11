@@ -60,19 +60,100 @@ package src.Dimensions
 		}
 		public function singularValueDecomposition():SVD
 		{
-			var Decomp:SVD = new SVD();
-			var m:Matrix = MatrixReference.rowReduced();
+			var AtA:Matrix = MatrixReference.transpose().multiply(MatrixReference);
+			var AtAEigVal:Vector = AtA.eigenvalues();
+			trace("AtA: \n"+AtA);
+			trace("EigVal: \n" + AtAEigVal);
 			
-			var r:int = m.numRows();
-			var b:Matrix = new Matrix();
-			var v:Vector = new Vector();
-			for (var i:int = 0; i < r; i++)
-			{
-				v.push(0);
+			var tempR: int = AtAEigVal.size();
+			var D:Matrix = new Matrix();
+			
+			for(var i:int = 0; i<tempR;i++){
+				var newVec:Vector = new Vector();
+				for (var j:int = 0; j < i; j++)
+				{
+					newVec.push(0);
+				}
+				newVec.push(Math.sqrt(AtAEigVal.getIndex(i)));
+				for (j = i+1; j < tempR; j++)
+				{
+					newVec.push(0);
+				}
+				D.addVector(newVec);
 			}
-			b.addVector(v);
+			D.lock();
+				
+			/*Takes Singular Values and subtracts them from AtA for each value
+			Creates a u1,u2,uX... matrix and adds an eigen vector from each
+			to the matrix U.*/
+			var zeroVector:Vector = new Vector();
 
-			return Decomp;	
+			//Matrix containing eigen vectors of AtA minus singular values
+			var U:Matrix = new Matrix();
+			//Take AtA and minus singular values
+			for(var sig:int =0; sig<tempR;sig++){
+				var uXA:Matrix = AtA.clone();
+					for(var k:int=0;k<tempR; k++){
+						uXA.setElement(k,k,uXA.getElement(k,k)-D.getElement(sig,sig));
+					}	
+				trace("current singular value: "+D.getElement(sig,sig));
+				trace("current u"+sig+": \n"+uXA);
+				//Add normalized eigen vector to U
+				trace("normalized vector for u"+sig+" : \n"+ uXA.eigenvectors().getColumn(0).normalize()+"\n");
+				trace("---------------------------------------");
+				U.addVector(uXA.eigenvectors().getColumn(0).normalize());
+			}
+			U.lock();
+			trace("\nD: \n"+D);
+			trace("U: \n"+U);
+			
+			var V:Matrix = new Matrix();
+			V = (MatrixReference.multiply(U)).multiply(D.inverse());
+			trace("V: \n"+V);
+			trace("V transpose: \n"+V.transpose());
+			
+			var svd:SVD = new SVD();
+			svd.Ut = U.transpose();
+			svd.V = V;
+			// A = VDU^T
+			svd.A = (V.multiply(D)).multiply(svd.Ut);
+			//Should return original matrix
+			trace("A after SVD: \n: "+svd.A);
+			return svd;
+			
+			/* I'm pretty sure A(k) is calculated depending on the value of r.
+			   	That is for A(k), r(k). Both k's are subscripts, not functions.
+			   	r is the singular value, and k for r(k) is the kth singular value
+			*/
+			
+			
+			//Wrote in LAB on 4-18-08
+			/*
+			var singValues:Vector = MatrixReference.singularValues();
+			trace("Sing values: "+singValues+"\n");
+			var singValuesSize:Number = singValues.size()-1;
+			var blankVector:Vector = new Vector();
+			
+			var tempR: int = singValues.size();
+			var w:Matrix = new Matrix();
+			for(var i:int = 0; i<tempR;i++){
+				var newVec:Vector = new Vector();
+				for (var j:int = 0; j < i; j++)
+				{
+					newVec.push(0);
+				}
+				newVec.push(singValues.getIndex(i));
+				for (j = i+1; j < tempR; j++)
+				{
+					newVec.push(0);
+				}
+				w.addVector(newVec);
+			}
+w.lock();
+trace("W Matrix: \n"+w);
+*/
+
+			return new SVD();	
 		}
 		
 
@@ -81,15 +162,20 @@ package src.Dimensions
 		{
 			var newMatrix:Matrix = new Matrix();
 			var AtA:Matrix = MatrixReference.transpose().multiply(MatrixReference);
-			AtA.lock();
-			var eigenvals:Vector = AtA.eigenvalues();
-			var singularvals:Vector = new Vector();
 			
+			var eigenvals:Vector = AtA.eigenvalues();
+			trace("eigen values: \n" +eigenvals);
+			var singularvals:Vector = new Vector();
 			var tempS:int = eigenvals.size();
 			for (var i:int = 0; i < tempS; i++)
 			{
-				singularvals.push(Math.sqrt(eigenvals.getIndex(i)));
+				var tempE:int = eigenvals.getIndex(i);
+				if (tempE >= 0)
+				{
+					singularvals.push(Math.sqrt(tempE));
+				}
 			}
+			trace("Sing Values: \n"+ singularvals);
 			return singularvals;
 		}
 		/**
@@ -158,11 +244,24 @@ package src.Dimensions
 		}
 		public function transpose():Matrix
 		{
-			var temp:Matrix = new Matrix();
-			var tempS:int = MatrixReference.numColumns();
+			var temp:Matrix = new Matrix();		
+			var checkCol:int = MatrixReference.numColumns();
+			var checkRow:int = MatrixReference.numRows();
+			var tempS:int;
+			
+			if(checkCol>=checkRow){
+				tempS = checkCol;
+			}
+			else{
+				tempS = checkRow;
+			}
+			
 			for (var i:int = 0; i < tempS; i++)
 			{
-				temp.addVector(MatrixReference.getRow(i).clone());
+				if(i<checkRow&&(i<checkRow||i<checkCol)){
+					temp.addVector(MatrixReference.getRow(i).clone());
+				}
+				
 			}	
 			temp.lock();
 			return temp;
@@ -229,7 +328,7 @@ package src.Dimensions
 				newMatrix.addVector(newColumn);
 			}
 			newMatrix.lock();
-			return newMatrix;
+			return newMatrix;d
 		}
 		/**
 		 * @param Matrices The Matrices to add.
