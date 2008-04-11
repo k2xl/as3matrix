@@ -14,21 +14,4 @@
 	<natures>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] Classes</name>
-			<type>2</type>
-			<location>C:/Program Files/Adobe/Adobe Flash CS3/en/Configuration/ActionScript 3.0/Classes</location>
-		</link>
-		<link>
-			<name>[source path] Source</name>
-			<type>2</type>
-			<location>C:/Documents and Settings/Danny/Desktop/Start/Work/AS3 Classes/astra-flash/Source</location>
-		</link>
-		<link>
-			<name>[source path] The mx library</name>
-			<type>2</type>
-			<location>C:/Documents and Settings/Danny/Desktop/Start/Work/AS3 Classes/The mx library</location>
-		</link>
-	</linkedResources>
 </projectDescription>

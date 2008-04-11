@@ -6,11 +6,13 @@
  */
 package src
 {	
+	import src.Decompositions.SVD;
 	import src.Dimensions.IMatrixDimension;
 	import src.Dimensions.Matrix2x2;
 	import src.Dimensions.Matrix3x3;
 	import src.Dimensions.MatrixMxM;
 	import src.Dimensions.MatrixMxN;
+	import src.errors.MatrixError;
 	import src.errors.MatrixLockError;
 	
 	public class Matrix
@@ -74,7 +76,7 @@ package src
 		{
 			if (locked)
 			{
-				trace("Warning... Already locked. Locking function terminated.");
+				throw MatrixError("Error... Already locked. Locking function terminated.");
 				return;
 			}
 			updateRowVectors();
@@ -176,6 +178,10 @@ package src
 		public function diagonalize():Matrix
 		{
 			return MatrixDimension.diagonalize();
+		}
+		public function singularValueDecomposition():SVD
+		{
+			return MatrixDimension.singularValueDecomposition();
 		}
 		public function singularValues():Vector
 		{

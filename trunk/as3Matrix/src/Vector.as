@@ -6,7 +6,7 @@ package src
 	public class Vector
 	{
 		// I would extend Array, but Flash has bizare problems with extending it since it has overloaded functions... At least with AS2 it did.
-		private var vec:Array;
+		public var vec:Array;
 		public function Vector(...values:*)
 		{
 			vec = values;

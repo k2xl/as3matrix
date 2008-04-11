@@ -4,9 +4,9 @@ package src.Decompositions
 	
 	public class SVD
 	{
-		public var S:Matrix;
-		public var U:Matrix;
-		public var Vt:Matrix;
+		public var V:Matrix;
+		public var Ut:Matrix;
+		public var A:Matrix;
 		public function SVD()
 		{
 		}
