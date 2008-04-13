@@ -263,7 +263,7 @@ package src
 			for (var i:int = 0; i < c; i++)
 			{
 				newMatrix.addVector(this.getColumn(i).multiply(n));
-			} 
+			}
 			newMatrix.lock();
 			return newMatrix;
 		}
