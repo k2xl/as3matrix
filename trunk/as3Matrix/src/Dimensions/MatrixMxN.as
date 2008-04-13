@@ -20,11 +20,11 @@ package src.Dimensions
 		}
 		public function eigenValues():Vector
 		{
-			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors.");
+			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors. Dimension: "+MatrixReference.numRows()+"x"+MatrixReference.numColumns());
 		}
 		public function eigenVectors():Matrix
 		{
-			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors.");
+			throw new MatrixDimensionError("Non square matrices have no eigenvalues or eigenvectors. Dimension: "+MatrixReference.numRows()+"x"+MatrixReference.numColumns());
 		}
 		public function isSymmetric():Boolean
 		{
@@ -65,7 +65,7 @@ package src.Dimensions
 			trace("AtA: \n"+AtA);
 			trace("EigVal: \n" + AtAEigVal);
 			
-			var tempR: int = AtAEigVal.size();
+			var tempR: int = AtAEigVal.length;
 			var D:Matrix = new Matrix();
 			
 			for(var i:int = 0; i<tempR;i++){
@@ -74,7 +74,7 @@ package src.Dimensions
 				{
 					newVec.push(0);
 				}
-				newVec.push(Math.sqrt(AtAEigVal.getIndex(i)));
+				newVec.push(Math.sqrt(AtAEigVal[i]));
 				for (j = i+1; j < tempR; j++)
 				{
 					newVec.push(0);
@@ -95,7 +95,7 @@ package src.Dimensions
 				var uXA:Matrix = AtA.clone();
 					for(var k:int=0;k<tempR; k++){
 						uXA.setElement(k,k,uXA.getElement(k,k)-D.getElement(sig,sig));
-					}	
+					}
 				trace("current singular value: "+D.getElement(sig,sig));
 				trace("current u"+sig+": \n"+uXA);
 				//Add normalized eigen vector to U
@@ -134,18 +134,24 @@ package src.Dimensions
 			var singValuesSize:Number = singValues.size()-1;
 			var blankVector:Vector = new Vector();
 			
-			var r:int = m.numRows();
-			var b:Matrix = new Matrix();
-			var v:Vector = new Vector();
-			for (var i:int = 0; i < r; i++)
-			{
-				v.push(0);
+			var tempR: int = singValues.size();
+			var w:Matrix = new Matrix();
+			for(var i:int = 0; i<tempR;i++){
+				var newVec:Vector = new Vector();
+				for (var j:int = 0; j < i; j++)
+				{
+					newVec.push(0);
+				}
+				newVec.push(singValues.getIndex(i));
+				for (j = i+1; j < tempR; j++)
+				{
+					newVec.push(0);
+				}
+				w.addVector(newVec);
 			}
 w.lock();
 trace("W Matrix: \n"+w);
-*/
-
-			return new SVD();	
+*/	
 		}
 		
 
@@ -154,7 +160,6 @@ trace("W Matrix: \n"+w);
 		{
 			var newMatrix:Matrix = new Matrix();
 			var AtA:Matrix = MatrixReference.transpose().multiply(MatrixReference);
-			
 			var eigenvals:Vector = AtA.eigenvalues();
 			trace("eigen values: \n" +eigenvals);
 			var singularvals:Vector = new Vector();
@@ -299,7 +304,7 @@ trace("W Matrix: \n"+w);
 		{
 			if (MatrixReference.columnVectors.length != m.rowVectors.length)
 			{
-				return null;
+				throw new MatrixDimensionError("Can't multiply axb by a cxd.");
 			}
 			/*var COUNT:int = 0;
 			var TS:int = 0;
@@ -323,6 +328,7 @@ trace("W Matrix: \n"+w);
 				}
 				newMatrix.columnVectors.push(vec);
 			}
+			newMatrix.lock();
 			return newMatrix;
 		}
 		/**
@@ -385,7 +391,7 @@ trace("W Matrix: \n"+w);
 		}
 		public function off():Number
 		{
-			throw new MatrixDimensionError("Can't compute off of non-square matrix");
+			throw new MatrixDimensionError("Can't compute off of non-square matrix. Current dimensions: "+MatrixReference.numRows()+"x"+MatrixReference.numColumns());
 		}
 	}
 }

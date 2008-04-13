@@ -110,10 +110,8 @@ package src.Dimensions
 			g.setElement(largestI, largestJ, U.getElement(0,1)); // b
 			g.setElement(largestJ, largestI, U.getElement(1,0)); // c
 			g.setElement(largestJ, largestJ, U.getElement(1,1)); //d
-			
 			var D:Matrix = g.transpose().multiply(this.MatrixReference);
 			D = D.multiply(g);
-			
 			return D;
 		}
 		// Runs one iteration of the jacobi without sorting
