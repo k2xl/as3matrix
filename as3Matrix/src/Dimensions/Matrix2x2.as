@@ -15,10 +15,10 @@ package src.Dimensions
 		public function Matrix2x2(ref:Matrix)
 		{
 			super(ref);
-			 a = MatrixReference.getColumn(0).getIndex(0);
-			 b = MatrixReference.getColumn(1).getIndex(0);
-			 c = MatrixReference.getColumn(0).getIndex(1);
-			 d = MatrixReference.getColumn(1).getIndex(1);
+			 a = MatrixReference.getColumn(0)[0];
+			 b = MatrixReference.getColumn(1)[0];
+			 c = MatrixReference.getColumn(0)[1];
+			 d = MatrixReference.getColumn(1)[1];
 		}
 		public override function determinant():Number
 		{
@@ -38,10 +38,6 @@ package src.Dimensions
 				throw new MatrixInverseError("Can't compute inverse when determinant is 0");
 			}
 			D = 1/D;
-			var a:Number = MatrixReference.getColumn(0).getIndex(0);
-			var b:Number = MatrixReference.getColumn(1).getIndex(0);
-			var c:Number = MatrixReference.getColumn(0).getIndex(1);
-			var d:Number = MatrixReference.getColumn(1).getIndex(1);
 			temp.addVector(new Vector(D*d,D*-c));
 			temp.addVector(new Vector(D*-b,D*a));
 			temp.lock();
@@ -66,13 +62,13 @@ package src.Dimensions
 			var eigenvals:Vector = eigenValues(); // will retrieve from cache if already calculated.
 			if (c != 0)
 			{
-				newMatrix.addVector((new Vector(eigenvals.getIndex(0)-d,c)).normalize());
-				newMatrix.addVector((new Vector(eigenvals.getIndex(1)-d,c)).normalize());
+				newMatrix.addVector((new Vector(eigenvals[0]-d,c)).normalize());
+				newMatrix.addVector((new Vector(eigenvals[1]-d,c)).normalize());
 			}
 			else if (b != 0)
 			{
-				newMatrix.addVector((new Vector(b,eigenvals.getIndex(0)-d)).normalize());
-				newMatrix.addVector((new Vector(b,eigenvals.getIndex(1)-d)).normalize());
+				newMatrix.addVector((new Vector(b,eigenvals[0]-d)).normalize());
+				newMatrix.addVector((new Vector(b,eigenvals[1]-d)).normalize());
 			}
 			else
 			{

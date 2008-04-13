@@ -134,20 +134,12 @@ package src.Dimensions
 			var singValuesSize:Number = singValues.size()-1;
 			var blankVector:Vector = new Vector();
 			
-			var tempR: int = singValues.size();
-			var w:Matrix = new Matrix();
-			for(var i:int = 0; i<tempR;i++){
-				var newVec:Vector = new Vector();
-				for (var j:int = 0; j < i; j++)
-				{
-					newVec.push(0);
-				}
-				newVec.push(singValues.getIndex(i));
-				for (j = i+1; j < tempR; j++)
-				{
-					newVec.push(0);
-				}
-				w.addVector(newVec);
+			var r:int = m.numRows();
+			var b:Matrix = new Matrix();
+			var v:Vector = new Vector();
+			for (var i:int = 0; i < r; i++)
+			{
+				v.push(0);
 			}
 w.lock();
 trace("W Matrix: \n"+w);
@@ -166,14 +158,11 @@ trace("W Matrix: \n"+w);
 			var eigenvals:Vector = AtA.eigenvalues();
 			trace("eigen values: \n" +eigenvals);
 			var singularvals:Vector = new Vector();
-			var tempS:int = eigenvals.size();
+			
+			var tempS:int = eigenvals.length;
 			for (var i:int = 0; i < tempS; i++)
 			{
-				var tempE:int = eigenvals.getIndex(i);
-				if (tempE >= 0)
-				{
-					singularvals.push(Math.sqrt(tempE));
-				}
+				singularvals.push(Math.sqrt(eigenvals[i]));
 			}
 			trace("Sing Values: \n"+ singularvals);
 			return singularvals;
@@ -270,7 +259,7 @@ trace("W Matrix: \n"+w);
 		{
 			var newMatrix:Matrix = new Matrix();
 			var eigenvals:Vector = MatrixReference.eigenvalues();
-			var tempS:int = eigenvals.size();
+			var tempS:int = eigenvals.length;
 			for (var i:int = 0; i < tempS; i++)
 			{
 				var newVec:Vector = new Vector();
@@ -278,7 +267,7 @@ trace("W Matrix: \n"+w);
 				{
 					newVec.push(0);
 				}
-				newVec.push(eigenvals.getIndex(i));
+				newVec.push(eigenvals[i]);
 				for (var r:int = k; r < tempS-1; r++)
 				{
 					newVec.push(0);
@@ -306,29 +295,35 @@ trace("W Matrix: \n"+w);
 			}
 			return newMatrix;
 		}
-		protected function multiplySingle(m:Matrix):Matrix
+		public function multiplySingle(m:Matrix):Matrix
 		{
-			if (MatrixReference.numColumns() != m.numRows())
+			if (MatrixReference.columnVectors.length != m.rowVectors.length)
 			{
 				return null;
 			}
+			/*var COUNT:int = 0;
+			var TS:int = 0;
+			var TE:int = 0;8*/
 			// m.rows,columns
 			var newMatrix:Matrix = new Matrix();
-			var rows:int = MatrixReference.numRows();
-			var tempC:int = m.numColumns();
+			var tempR:int = MatrixReference.numRows(), tempC:int = m.numColumns();
 			for (var col:int = 0; col < tempC; col++)
 			{
-				var newColumn:Vector = new Vector();
-				var currentColumn:Vector = m.getColumn(col);
-				for (var row:int = 0; row < rows; row++)
+				var vec:Vector = new Vector(tempR); // preallocates the memory?...
+				var tempColV:Array = m.columnVectors[col] as Vector;
+				for (var row:int = 0; row < tempR; row++)
 				{
-					var val:Number = MatrixReference.getRow(row).dot(currentColumn);
-					newColumn.push(val);
+					var tempRowV:Vector = MatrixReference.rowVectors[row] as Vector;
+					var product:Number = 0;
+					for (var i:int = 0; i < tempR; i++)
+					{
+						product+=tempRowV[i]*tempColV[i];
+					}
+					vec[row] = product;
 				}
-				newMatrix.addVector(newColumn);
+				newMatrix.columnVectors.push(vec);
 			}
-			newMatrix.lock();
-			return newMatrix;d
+			return newMatrix;
 		}
 		/**
 		 * @param Matrices The Matrices to add.
@@ -358,9 +353,7 @@ trace("W Matrix: \n"+w);
 				var newColumn:Vector = new Vector();
 				for (var row:int = 0; row < rows; row++)
 				{
-					var e1:Number = MatrixReference.getColumn(col).getIndex(row);
-					var e2:Number = m.getColumn(col).getIndex(row);
-					newColumn.push(e1+e2);
+					newColumn.push((MatrixReference.getColumn(col)[row]+m.getColumn(col)[row]));
 				}
 				newMatrix.addVector(newColumn);
 			}
@@ -381,11 +374,11 @@ trace("W Matrix: \n"+w);
 				var newColumn:Vector = new Vector();
 				for (var row:int = 0; row < rows; row++)
 				{
-					var e1:Number = MatrixReference.getColumn(col).getIndex(row);
-					var e2:Number = m.getColumn(col).getIndex(row);
+					var e1:Number = MatrixReference.getColumn(col)[row];
+					var e2:Number = m.getColumn(col)[row];
 					newColumn.push(e1-e2);
 				}
-				newMatrix.addVector(newColumn);
+				newMatrix.columnVectors.push(newColumn);
 			}
 			newMatrix.lock();
 			return newMatrix;

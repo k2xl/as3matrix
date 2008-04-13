@@ -17,8 +17,8 @@ package src
 	
 	public class Matrix
 	{
-		private var columnVectors:Array;
-		private var rowVectors:Array;
+		public var columnVectors:Array;
+		public var rowVectors:Array;
 		private var columns:int;
 		private var rows:int;
 		public var MatrixDimension:IMatrixDimension;
@@ -44,14 +44,7 @@ package src
 				throw new MatrixLockError("Matrix must be unlocked before addition of new vectors.");
 				return;
 			}
-			columnVectors.push(v);	
-			var vsize:int = getColumn(columnVectors.length-1).size();
-			
-			if (vsize > rows)
-			{
-				rows = vsize;
-			}
-			columns++;
+			columnVectors.push(v);
 		}
 		public function jacobi():Matrix
 		{
@@ -79,6 +72,8 @@ package src
 				throw MatrixError("Error... Already locked. Locking function terminated.");
 				return;
 			}
+			rows = columnVectors[columnVectors.length-1].length;
+			columns = columnVectors.length;
 			updateRowVectors();
 			/**
 			 * If this matrix is 2x2, then there are formulas that solve certain functions faster
@@ -120,6 +115,23 @@ package src
 			this.rowVectors[index1] = getRow(index2).clone();
 			this.rowVectors[index2] = t;
 			updateColumnVectors();
+		}
+		/**
+		 * Returns a random matrix with values between 0-1
+		 */ 
+		public static function rand(rs:int,cols:int):Matrix
+		{
+			var m:Matrix=  new Matrix();
+			for (var i:int = 0; i < rs; i++) 
+			{
+				var t:Vector = new Vector();
+				for (var j:int = 0; j < rs; j++)
+				{
+					t[j] = Math.random();
+				}
+				m.columnVectors.push(t);
+			}
+			return m;
 		}
 		public function clone():Matrix
 		{
@@ -202,12 +214,12 @@ package src
 		}
 		public function getElement(r:int,c:int):Number
 		{
-			 return getRow(r).getIndex(c);
+			 return getRow(r)[c];
 		}
 		public function setElement(r:int,c:int,value:Number):void
 		{
-			getRow(r).setValue(c,value);
-			getColumn(c).setValue(r,value);
+			getRow(r)[c] = value;
+			getColumn(c)[r] = value;
 		}
 		public function transpose():Matrix
 		{
@@ -255,9 +267,9 @@ package src
 			newMatrix.lock();
 			return newMatrix;
 		}
-		public function multiply(...Matrices):Matrix
+		public function multiply(m:Matrix):Matrix
 		{
-			return MatrixDimension.multiply(Matrices);
+			return MatrixDimension.multiplySingle(m);
 		}
 		public function solve(B:Matrix):Matrix
 		{
@@ -272,8 +284,7 @@ package src
 			var vec:Vector = new Vector();
 			for (var i:int = 0; i < columns; i++)
 			{
-				var temp:Number = getColumn(i).getIndex(rowIndex);
-				vec.push(temp);
+				vec.push(getColumn(i)[rowIndex]);
 			}
 			return vec;
 		}
@@ -287,8 +298,7 @@ package src
 			var vec:Vector = new Vector();
 			for (var i:int = 0; i < rows; i++)
 			{
-				var temp:Number = getRow(i).getIndex(columnIndex);
-				vec.push(temp);
+				vec.push(getRow(i)[columnIndex]);
 			}
 			return vec;
 		}
