@@ -17,7 +17,7 @@ package src.Dimensions
 		function diagonalize():Matrix;
 		function add(Matrices:Array):Matrix;
 		function subtract(Matrices:Array):Matrix;
-		function multiply(Matrices:Array):Matrix;
+		function multiplySingle(m:Matrix):Matrix;
 		function rowReduced():Matrix;
 		function singularValueDecomposition():SVD;
 		function LUDecomposition():LU;
