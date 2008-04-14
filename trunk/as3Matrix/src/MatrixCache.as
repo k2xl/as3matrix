@@ -12,8 +12,10 @@ package src
 		public var kernalCache:Matrix;
 		public var L:Matrix;
 		public var U:Matrix;
+		public var covarientCache:Matrix;
 		public function MatrixCache()
 		{
+			covarientCache = null;
 			eigenvaluesCache = null;
 			determinantCache = Number.NEGATIVE_INFINITY;
 			eigenvectorsCache = null;
