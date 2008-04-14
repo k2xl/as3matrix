@@ -108,6 +108,7 @@ package src.Dimensions
 			trace("U: \n"+U);
 			
 			var V:Matrix = new Matrix();
+			trace("M = \n"+MatrixReference+"\n*\nU=\n"+U);
 			V = (MatrixReference.multiply(U)).multiply(D.inverse());
 			trace("V: \n"+V);
 			trace("V transpose: \n"+V.transpose());
@@ -320,7 +321,7 @@ trace("W Matrix: \n"+w);
 				{
 					var tempRowV:Vector = MatrixReference.rowVectors[row] as Vector;
 					var product:Number = 0;
-					for (var i:int = 0; i < tempR; i++)
+					for (var i:int = 0; i < tempC; i++)
 					{
 						product+=tempRowV[i]*tempColV[i];
 					}
