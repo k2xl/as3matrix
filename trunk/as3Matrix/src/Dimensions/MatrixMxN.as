@@ -60,8 +60,8 @@ package src.Dimensions
 		}
 		public function singularValueDecomposition():SVD
 		{
-			var AtA:Matrix = MatrixReference.covarient();
 			var sV:Vector = MatrixReference.singularValues();
+			var AtA:Matrix = MatrixReference.covarient(); // Will be cache
 			var tempR:int = sV.length;
 			var D:Matrix = new Matrix();
 			for(var i:int = 0; i<tempR;i++){
@@ -154,7 +154,7 @@ trace("W Matrix: \n"+w);
 		public function singularValues():Vector
 		{
 			var newMatrix:Matrix = new Matrix();
-			var AtA:Matrix = MatrixReference.transpose().multiply(MatrixReference);
+			var AtA:Matrix = MatrixReference.covarient();
 			var eigenvals:Vector = AtA.eigenvalues();
 			trace("eigen values: \n" +eigenvals);
 			var singularvals:Vector = new Vector();
