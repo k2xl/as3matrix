@@ -60,21 +60,17 @@ package src.Dimensions
 		}
 		public function singularValueDecomposition():SVD
 		{
-			var AtA:Matrix = MatrixReference.transpose().multiply(MatrixReference);
-			var AtAEigVal:Vector = AtA.eigenvalues();
-			trace("AtA: \n"+AtA);
-			trace("EigVal: \n" + AtAEigVal);
-			
-			var tempR: int = AtAEigVal.length;
+			var AtA:Matrix = MatrixReference.covarient();
+			var sV:Vector = MatrixReference.singularValues();
+			var tempR:int = sV.length;
 			var D:Matrix = new Matrix();
-			
 			for(var i:int = 0; i<tempR;i++){
 				var newVec:Vector = new Vector();
 				for (var j:int = 0; j < i; j++)
 				{
 					newVec.push(0);
 				}
-				newVec.push(Math.sqrt(AtAEigVal[i]));
+				newVec.push(Math.sqrt(sV[i]));
 				for (j = i+1; j < tempR; j++)
 				{
 					newVec.push(0);
@@ -104,8 +100,6 @@ package src.Dimensions
 				U.addVector(uXA.eigenvectors().getColumn(0).normalize());
 			}
 			U.lock();
-			trace("\nD: \n"+D);
-			trace("U: \n"+U);
 			
 			var V:Matrix = new Matrix();
 			trace("M = \n"+MatrixReference+"\n*\nU=\n"+U);
@@ -236,6 +230,10 @@ trace("W Matrix: \n"+w);
 		public function inverse():Matrix
 		{
 			throw new MatrixDimensionError("Cannot compute inverse of a non-square matrix");
+		}
+		public function covarient():Matrix
+		{
+			return MatrixReference.transpose().multiply(MatrixReference);
 		}
 		public function transpose():Matrix
 		{

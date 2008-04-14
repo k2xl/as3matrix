@@ -29,5 +29,6 @@ package src.Dimensions
 		function jacobi():Matrix;
 		function jacobiNoSort():Matrix;
 		function off():Number;
+		function covarient():Matrix;
 	}
 }

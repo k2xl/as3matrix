@@ -239,6 +239,15 @@ package src
 			Cache.rowReducedCache = MatrixDimension.rowReduced();
 			return Cache.rowReducedCache;
 		}
+		public function covarient():Matrix
+		{
+			if (Cache.covarientCache != null)
+			{
+				return Cache.covarientCache;
+			}
+			Cache.covarientCache = MatrixDimension.covarient();
+			return Cache.covarientCache;
+		}
 		public function inverse():Matrix
 		{
 			if (Cache.inverseCache != null)
