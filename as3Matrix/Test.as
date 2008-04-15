@@ -9,13 +9,14 @@ package {
     {
         public function Test()
         {
+        	
+
 			var t:Matrix = new Matrix();
-			t.addVector(new Vector(2,2,0));
-            t.addVector(new Vector(0,1,0));	
+			t.addVector(new Vector(3,4,-6,4));
+            t.addVector(new Vector(1,-1,8,4));	
             t.lock();
             trace("Orig: \n"+t);
-            t.singularValueDecomposition();
-               
+            t.singularValueDecomposition();         
         }
     }
 

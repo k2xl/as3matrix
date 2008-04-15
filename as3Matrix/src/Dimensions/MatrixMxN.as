@@ -61,7 +61,8 @@ package src.Dimensions
 		public function singularValueDecomposition():SVD
 		{
 			var sV:Vector = MatrixReference.singularValues();
-			var AtA:Matrix = MatrixReference.covarient(); // Will be cache
+			//trace("Singular Values: \n"+sV);
+			var AtA:Matrix = MatrixReference.covarient(); // Will be cached
 			var tempR:int = sV.length;
 			var D:Matrix = new Matrix();
 			for(var i:int = 0; i<tempR;i++){
@@ -70,7 +71,7 @@ package src.Dimensions
 				{
 					newVec.push(0);
 				}
-				newVec.push(Math.sqrt(sV[i]));
+				newVec.push(sV[i]);
 				for (j = i+1; j < tempR; j++)
 				{
 					newVec.push(0);
@@ -78,11 +79,11 @@ package src.Dimensions
 				D.addVector(newVec);
 			}
 			D.lock();
-				
+			
+			trace("D: \n"+D);
 			/*Takes Singular Values and subtracts them from AtA for each value
 			Creates a u1,u2,uX... matrix and adds an eigen vector from each
 			to the matrix U.*/
-			var zeroVector:Vector = new Vector();
 
 			//Matrix containing eigen vectors of AtA minus singular values
 			var U:Matrix = new Matrix();
@@ -90,22 +91,28 @@ package src.Dimensions
 			for(var sig:int =0; sig<tempR;sig++){
 				var uXA:Matrix = AtA.clone();
 					for(var k:int=0;k<tempR; k++){
-						uXA.setElement(k,k,uXA.getElement(k,k)-D.getElement(sig,sig));
+						uXA.setElement(k,k,uXA.getElement(k,k)-(sV[sig]*sV[sig]));
 					}
-				trace("current singular value: "+D.getElement(sig,sig));
-				trace("current u"+sig+": \n"+uXA);
+					
+								
+				//trace("current eigen value: "+sV[sig]*sV[sig]);
+				//trace("current u"+sig+": \n"+uXA);
 				//Add normalized eigen vector to U
-				trace("normalized vector for u"+sig+" : \n"+ uXA.eigenvectors().getColumn(0).normalize()+"\n");
-				trace("---------------------------------------");
-				U.addVector(uXA.eigenvectors().getColumn(0).normalize());
+				//trace("unnormalized vector for u"+sig+" : \n"+ uXA.eigenvectors().getColumn(0)+"\n");
+				//trace("normalized vector for u"+sig+" : \n"+ uXA.eigenvectors().getColumn(0).normalize()+"\n");
+				//trace("eigenVectors: \n"+uXA.eigenvectors());
+				//trace("---------------------------------------");
+				
+				U.addVector(uXA.eigenvectors().getColumn(sig));
+
 			}
 			U.lock();
-			
+
 			var V:Matrix = new Matrix();
-			trace("M = \n"+MatrixReference+"\n*\nU=\n"+U);
+			//trace("M = \n"+MatrixReference+"\n*\nU=\n"+U);
 			V = (MatrixReference.multiply(U)).multiply(D.inverse());
-			trace("V: \n"+V);
-			trace("V transpose: \n"+V.transpose());
+			trace("V(U on online calc): \n"+V);
+			trace("U Transpose (V^T on online calc): \n"+U.transpose());
 			
 			var svd:SVD = new SVD();
 			svd.Ut = U.transpose();
@@ -113,50 +120,23 @@ package src.Dimensions
 			// A = VDU^T
 			svd.A = (V.multiply(D)).multiply(svd.Ut);
 			//Should return original matrix
-			trace("A after SVD: \n: "+svd.A);
+			trace("Multiplied out decomposed matrices to check (should return orig matrix): \n"+svd.A);
 			return svd;
 			
 			/* I'm pretty sure A(k) is calculated depending on the value of r.
 			   	That is for A(k), r(k). Both k's are subscripts, not functions.
 			   	r is the singular value, and k for r(k) is the kth singular value
 			*/
-			
-			
-			//Wrote in LAB on 4-18-08
-			/*
-			var singValues:Vector = MatrixReference.singularValues();
-			trace("Sing values: "+singValues+"\n");
-			var singValuesSize:Number = singValues.size()-1;
-			var blankVector:Vector = new Vector();
-			
-			var tempR: int = singValues.size();
-			var w:Matrix = new Matrix();
-			for(var i:int = 0; i<tempR;i++){
-				var newVec:Vector = new Vector();
-				for (var j:int = 0; j < i; j++)
-				{
-					newVec.push(0);
-				}
-				newVec.push(singValues.getIndex(i));
-				for (j = i+1; j < tempR; j++)
-				{
-					newVec.push(0);
-				}
-				w.addVector(newVec);
-			}
-w.lock();
-trace("W Matrix: \n"+w);
-*/	
-		}
-		
 
+		
+		}
 		
 		public function singularValues():Vector
 		{
 			var newMatrix:Matrix = new Matrix();
 			var AtA:Matrix = MatrixReference.covarient();
 			var eigenvals:Vector = AtA.eigenvalues();
-			trace("eigen values: \n" +eigenvals);
+			//trace("eigen values: \n" +eigenvals);
 			var singularvals:Vector = new Vector();
 			
 			var tempS:int = eigenvals.length;
@@ -164,7 +144,7 @@ trace("W Matrix: \n"+w);
 			{
 				singularvals.push(Math.sqrt(eigenvals[i]));
 			}
-			trace("Sing Values: \n"+ singularvals);
+			//trace("Sing Values: \n"+ singularvals);
 			return singularvals;
 		}
 		/**
