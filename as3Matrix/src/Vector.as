@@ -56,6 +56,7 @@ package src
 				}
 				newMatrix.addVector(newVector);
 			}
+			newMatrix.lock();
 			return newMatrix;
 		}
 		

@@ -64,10 +64,6 @@ package src.Dimensions
 			//trace("Singular Values: \n"+sV);
 			var AtA:Matrix = MatrixReference.covarient(); // Will be cached
 			var tempR:int = sV.length;
-			if (rApprox > 0)
-			{
-				tempR = rApprox;
-			}
 			var D:Matrix = new Matrix();
 			for(var i:int = 0; i<tempR;i++){
 				var newVec:Vector = new Vector();
@@ -84,7 +80,7 @@ package src.Dimensions
 			}
 			D.lock();
 			
-			trace("D: \n"+D);
+			
 			/*Takes Singular Values and subtracts them from AtA for each value
 			Creates a u1,u2,uX... matrix and adds an eigen vector from each
 			to the matrix U.*/
@@ -115,23 +111,34 @@ package src.Dimensions
 			var V:Matrix = new Matrix();
 			//trace("M = \n"+MatrixReference+"\n*\nU=\n"+U);
 			V = (MatrixReference.multiply(U)).multiply(D.inverse());
-			trace("V(U on online calc): \n"+V);
-			trace("U Transpose (V^T on online calc): \n"+U.transpose());
+			
 			
 			var svd:SVD = new SVD();
-			svd.Ut = U.transpose();
-			svd.V = V;
-			// A = VDU^T
-			svd.A = (V.multiply(D)).multiply(svd.Ut);
-			//Should return original matrix
-			trace("Multiplied out decomposed matrices to check (should return orig matrix): \n"+svd.A);
+			U = U.transpose();
+			if (rApprox == 0)
+			{
+				svd.Ut = U;
+				svd.V = V;
+				// A = VDU^T
+				svd.D = D;
+				return svd;
+			}
+			// Approx
+			for (i = 0; i < rApprox; i++)
+			{
+				svd.Ut.addVector(U.getColumn(i));
+				svd.V.addVector(V.getColumn(i));
+				svd.D.addVector(D.getColumn(i));
+			}
+			svd.Ut.lock();
+			svd.V.lock();
+			svd.D.lock();
 			return svd;
-			
 			/* I'm pretty sure A(k) is calculated depending on the value of r.
 			   	That is for A(k), r(k). Both k's are subscripts, not functions.
 			   	r is the singular value, and k for r(k) is the kth singular value
 			*/
-
+			
 		
 		}
 		

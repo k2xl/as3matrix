@@ -93,7 +93,7 @@ package src
 			locked = true;
 		}
 		
-		private function updateRowVectors():void
+		public function updateRowVectors():void
 		{
 			rowVectors = new Array();
 			for (var g:int = 0; g < rows; g++)
