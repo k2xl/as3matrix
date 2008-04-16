@@ -19,7 +19,7 @@ package src.Dimensions
 		function subtract(Matrices:Array):Matrix;
 		function multiplySingle(m:Matrix):Matrix;
 		function rowReduced():Matrix;
-		function singularValueDecomposition():SVD;
+		function singularValueDecomposition(rApprx:int = -1):SVD;
 		function LUDecomposition():LU;
 		function QRDecomposition():QR;
 		function kernal():Matrix;

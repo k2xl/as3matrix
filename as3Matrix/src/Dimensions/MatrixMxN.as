@@ -58,12 +58,16 @@ package src.Dimensions
 		{
 			return null;
 		}
-		public function singularValueDecomposition():SVD
+		public function singularValueDecomposition(rApprox:int = 0):SVD
 		{
 			var sV:Vector = MatrixReference.singularValues();
 			//trace("Singular Values: \n"+sV);
 			var AtA:Matrix = MatrixReference.covarient(); // Will be cached
 			var tempR:int = sV.length;
+			if (rApprox > 0)
+			{
+				tempR = rApprox;
+			}
 			var D:Matrix = new Matrix();
 			for(var i:int = 0; i<tempR;i++){
 				var newVec:Vector = new Vector();
