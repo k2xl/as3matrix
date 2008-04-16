@@ -191,9 +191,9 @@ package src
 		{
 			return MatrixDimension.diagonalize();
 		}
-		public function singularValueDecomposition():SVD
+		public function singularValueDecomposition(rApprox:int=0):SVD
 		{
-			return MatrixDimension.singularValueDecomposition();
+			return MatrixDimension.singularValueDecomposition(rApprox);
 		}
 		public function singularValues():Vector
 		{
