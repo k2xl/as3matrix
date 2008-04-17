@@ -1,5 +1,6 @@
 package src.Dimensions
 {
+	import src.Decompositions.QR;
 	import src.Matrix;
 	import src.Vector;
 
@@ -34,25 +35,31 @@ package src.Dimensions
 			var A:Matrix = MatrixReference.clone();
 			for (var i:int = 0; i < 1000; i++)
 			{
-				A = A.QRDecomposition().Q;
-				if (A.off() < 1e-10)
+				var Decomp:QR = A.QRDecomposition();
+				A = Decomp.R.multiply(Decomp.Q);
+				//trace(A)
+				//trace(D.R);
+				trace(Decomp.Q.off());
+				if (Decomp.Q.off() < 1e-10)
 				{
 					break;
 				}
 			}
+			trace(i);
 			return A;
 		}
 		public override function eigenValues():Vector
 		{
 			var e:Vector = new Vector();
 			var d:Matrix = MatrixReference.diagonalize();
-			var tempS:int = MatrixReference.numColumns();
+			var tempS:int = d.numColumns();
 			for (var i:int = 0; i < tempS; i++)
 			{
-				e.push(MatrixReference.getElement(i,i));
+				e.push(d.getElement(i,i));
 			}
 			return e;
 		}
+		
 		public override function off():Number
 		{
 			var sum:Number = 0;
