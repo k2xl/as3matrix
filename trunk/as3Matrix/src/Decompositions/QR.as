@@ -6,10 +6,10 @@ package src.Decompositions
 	public class QR
 	{
 		public var Q:Matrix;
-		public var R:Vector;
+		public var R:Vector; // diagonals
 		public function toString():String
 		{
-			return ""+(R);
+			return ""+(Q);
 		}
 		public function QR(A:Matrix)
 		{

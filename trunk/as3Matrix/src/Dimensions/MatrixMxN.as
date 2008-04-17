@@ -250,7 +250,7 @@ package src.Dimensions
 			temp.lock();
 			return temp;
 		}
-		public function diagonalize():Matrix
+		public function diagonalized():Matrix
 		{
 			var newMatrix:Matrix = new Matrix();
 			var eigenvals:Vector = MatrixReference.eigenvalues();
