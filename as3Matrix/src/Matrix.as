@@ -27,13 +27,32 @@ package src
 		public var Cache:MatrixCache;
 
 		private var locked:Boolean;
-		public function Matrix()
+		public function Matrix(arr:Array = null)
 		{
 			columnVectors = new Array();
 			Cache = new MatrixCache();
 			columns = 0;
 			rows = 0;
 			unlock();
+			if (arr != null)
+			{
+				rowVectors = new Array();
+				var tempS:int = arr.length;
+				for (var i:int = 0; i < tempS; i++)
+				{
+					var tempS2:int = arr[i].length;
+					var v:Vector = new Vector();
+					for (var j:int = 0; j < tempS2; j++)
+					{
+						v[j] = arr[i][j];
+					}
+					rowVectors[i] = (v);
+				}
+				columns = rowVectors[0].length;
+				rows = rowVectors.length;
+				updateColumnVectors();
+				lock();
+			}
 		}
 		/**
 		 * @param v A column vector.
@@ -219,7 +238,7 @@ package src
 		}
 		public function getElement(r:int,c:int):Number
 		{
-			 return getRow(r)[c];
+			 return rowVectors[r][c];
 		}
 		public function setElement(r:int,c:int,value:Number):void
 		{
