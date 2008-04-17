@@ -14,7 +14,8 @@ package Tests
             t.addVector(new Vector(3,1,1));      
             t.lock();
             trace("Orig: \n"+t);
-            trace("Sing vales\n"+t.singularValueDecomposition(1));
+            trace(t.eigenvalues());
+           // trace("Sing vales\n"+t.singularValueDecomposition(1));
 
 		}
 
