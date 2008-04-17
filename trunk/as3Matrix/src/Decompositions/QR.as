@@ -1,3 +1,6 @@
+/**
+ * Taken from Clver's JAMA port
+ */
 package src.Decompositions
 {
 	import src.Matrix;
