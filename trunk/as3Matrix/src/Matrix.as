@@ -370,5 +370,20 @@ package src
 			m.lock();
 			return m;
 		}
+		public static function zeros(size:int = 2):Matrix
+		{
+			var m:Matrix = new Matrix();
+			for (var i:int = 0; i < size; i++)
+			{
+				var v:Vector = new Vector();
+				for (var g:int = 0; g < size; g++)
+				{
+					v.push(0);
+				}
+				m.addVector(v);
+			}
+			m.lock();
+			return m;
+		}
 	}
 }
