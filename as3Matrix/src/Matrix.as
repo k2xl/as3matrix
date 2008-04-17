@@ -190,7 +190,7 @@ package src
 		}
 		public function diagonalize():Matrix
 		{
-			return MatrixDimension.diagonalize();
+			return MatrixDimension.diagonalized();
 		}
 		public function QRDecomposition():QR
 		{

@@ -14,7 +14,7 @@ package src.Dimensions
 		function eigenVectors():Matrix;
 		function transpose():Matrix;
 		function inverse():Matrix;
-		function diagonalize():Matrix;
+		function diagonalized():Matrix;
 		function add(Matrices:Array):Matrix;
 		function subtract(Matrices:Array):Matrix;
 		function multiplySingle(m:Matrix):Matrix;

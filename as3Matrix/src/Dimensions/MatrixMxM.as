@@ -1,9 +1,7 @@
 package src.Dimensions
 {
-	import src.Decompositions.QR;
 	import src.Matrix;
 	import src.Vector;
-	import src.errors.MatrixError;
 
 	public class MatrixMxM extends MatrixMxN
 	{
@@ -23,24 +21,26 @@ package src.Dimensions
 			return product;
 		}
 		/**
-		 * Diagonalize the Matrix using Jacobi's algortihm.
+		 * Diagonalize the Matrix using QR algortihm.
 		 * @return the diagnoal matrix
 		 */
-		public override function diagonalize():Matrix
+		public override function diagonalized():Matrix
 		{
-			if (!MatrixReference.equals(MatrixReference.transpose()))
+			// Commenting out since we'll be using QR instead of jacobi
+			/*if (!MatrixReference.equals(MatrixReference.transpose()))
 			{
 				throw new MatrixError("Cannot diagonalize a non symmetric matrix with jacobi");
-			}
+			}*/
+			var A:Matrix = MatrixReference.clone();
 			for (var i:int = 0; i < 1000; i++)
 			{
-				MatrixReference = MatrixReference.jacobi();
-				if (MatrixReference.off() < 1e-10)
+				A = A.QRDecomposition().Q;
+				if (A.off() < 1e-10)
 				{
 					break;
 				}
 			}
-			return MatrixReference;
+			return A;
 		}
 		public override function eigenValues():Vector
 		{
