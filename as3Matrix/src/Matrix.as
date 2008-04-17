@@ -6,6 +6,7 @@
  */
 package src
 {	
+	import src.Decompositions.QR;
 	import src.Decompositions.SVD;
 	import src.Dimensions.IMatrixDimension;
 	import src.Dimensions.Matrix2x2;
@@ -190,6 +191,10 @@ package src
 		public function diagonalize():Matrix
 		{
 			return MatrixDimension.diagonalize();
+		}
+		public function QRDecomposition():QR
+		{
+			return MatrixDimension.QRDecomposition();
 		}
 		public function singularValueDecomposition(rApprox:int=0):SVD
 		{

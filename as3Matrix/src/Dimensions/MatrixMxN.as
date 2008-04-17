@@ -52,7 +52,7 @@ package src.Dimensions
 		}
 		public function QRDecomposition():QR
 		{
-			return null;
+			return new QR(this.MatrixReference);
 		}
 		public function LUDecomposition():LU
 		{

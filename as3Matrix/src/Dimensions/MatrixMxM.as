@@ -1,5 +1,6 @@
 package src.Dimensions
 {
+	import src.Decompositions.QR;
 	import src.Matrix;
 	import src.Vector;
 	import src.errors.MatrixError;
