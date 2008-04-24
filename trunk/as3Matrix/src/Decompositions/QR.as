@@ -111,8 +111,8 @@ package src.Decompositions
 		      processQ();
 		      processR();
 		      // Garbage collect time
-		      RDiag = null;
-		      Decomp = null;
+		      //RDiag = null;
+		      //Decomp = null;
 		}
 			   public static function hypot(a:Number, b:Number):Number {
 	      var r:Number;
@@ -127,6 +127,63 @@ package src.Decompositions
 	      }
 	      return r;
 	   }
+	   	/** Is the matrix full rank?
+			@return     true if R, and hence A, has full rank.
+		*/
+
+		public function isFullRank ():Boolean {
+			for (var j:int = 0; j < n; j++) {
+				if (RDiag[j] == 0)
+					return false;
+			}
+			return true;
+		}
+
+	   	public function solve (B:Matrix):Matrix{
+			if (B.numRows() != m) {
+				throw new Error("Matrix row dimensions must agree.");
+			}
+			if (!this.isFullRank()) {
+				throw new Error("Matrix is rank deficient.");
+			}
+
+			// Copy right hand side
+			var nx:int = B.numColumns();
+			//var X:Matrix = B.clone();
+			
+			var k:int;
+			var j:int;
+			var i:int;
+			var s:Number;
+			
+			var X:Matrix = B.clone();//Q.transpose().multiply(B);
+			// Compute Y = transpose(Q)*B
+			for (k = 0; k < n; k++) {
+				for (j = 0; j < nx; j++) {
+					s = 0; 
+					for (i = k; i < m; i++) {
+						s += Decomp.getElement(i,k)*X.getElement(i,j);
+					}
+					s = -s/Decomp.getElement(k,k);
+					for (i = k; i < m; i++) {
+						X.setElement(i,j,X.getElement(i,j) + s*Decomp.getElement(i,k));
+					}
+				}
+			}
+			// Solve R*X = Y;
+			for (k = n-1; k >= 0; k--) {
+				for (j = 0; j < nx; j++) {
+					X.setElement(k,j,X.getElement(k,j) / RDiag[k]);
+				}
+				for (i = 0; i < k; i++) {
+					for (j = 0; j < nx; j++) {
+						X.setElement(i,j,X.getElement(i,j) - X.getElement(k,j)*Decomp.getElement(i,k));
+					}
+				}
+			}
+			return X;//(new Matrix(X,n,nx).getMatrix(0,n-1,0,nx-1));
+		}
+
 
 	}
 	
