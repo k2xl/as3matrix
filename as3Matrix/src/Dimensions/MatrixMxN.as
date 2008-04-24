@@ -137,7 +137,7 @@ package src.Dimensions
 		}
 		public function solve(B:Matrix):Matrix
 		{
-			return new Matrix(); 
+			return MatrixReference.QRDecomposition().solve(B); 
 		}
 		public function inverse():Matrix
 		{

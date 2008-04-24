@@ -10,6 +10,10 @@ package src.Dimensions
 		{
 			super(ref);
 		}
+		public override function inverse():Matrix
+		{ 
+			return MatrixReference.solve(Matrix.identity(MatrixReference.numColumns()));
+		}
 		public override function determinant():Number
 		{
 			var m:Matrix = MatrixReference.rowReduced();
@@ -174,10 +178,6 @@ package src.Dimensions
 			}
 			return true;
 		}
-		public override function solve(B:Matrix):Matrix
-		{
-			var m:Matrix = MatrixReference.inverse();
-			return (m.multiply(B));
-		}
+		
 	}
 }

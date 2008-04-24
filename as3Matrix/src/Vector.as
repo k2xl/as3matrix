@@ -30,6 +30,24 @@ package src
 				}
 			}
 		}
+		public function sum():Number
+		{
+			var total:Number = 0;
+			for each (var element:Number in this)
+			{
+				total+=element;
+			}
+			return total;
+		}
+		public function mag():Number
+		{
+			var total:Number = 0;
+			for each (var element:Number in this)
+			{
+				total+=element*element;
+			}
+			return Math.sqrt(total);
+		}
 		public function dot(other:Vector):Number
 		{
 			var product:Number = 0;
