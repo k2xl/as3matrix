@@ -1,6 +1,7 @@
 package Tests
 {
-	import src.Decompositions.SVD;
+	import flash.utils.getTimer;
+	
 	import src.Matrix;
 	import src.Vector;
 	
@@ -16,8 +17,10 @@ package Tests
             t.lock();
             trace("Orig: \n"+t);
             //trace(t.eigenvalues());
-            var s:SVD = t.singularValueDecomposition(0);
-            trace(s.U);
+            //var s:SVD = t.singularValueDecomposition(0);
+            //trace(s.U);
+            
+            
            	//trace(s.V);
            	//trace(s.S);
 
