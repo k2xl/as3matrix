@@ -9,7 +9,7 @@
 */
 
 package src.Decompositions{
-	import src.Matrix;
+	import src.math.as3Matrix.Matrix;
 	
 
 	/** Singular Value Decomposition.

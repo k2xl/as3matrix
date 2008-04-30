@@ -1,6 +1,6 @@
 package src.Decompositions
 {
-	import src.Matrix;
+	import src.math.as3Matrix.Matrix;
 	
 	public class LU
 	{
