@@ -1,6 +1,6 @@
 package src.Dimensions
 {
-	import src.math.as3Matrix.Matrix;
+	import src.Matrix;
 	
 	public class Matrix3x3 extends MatrixMxM
 	{

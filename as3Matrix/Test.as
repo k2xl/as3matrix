@@ -1,5 +1,5 @@
 package {
-    import Tests.QRIteration;
+    import Tests.Jacobi;
     
     import flash.display.Sprite;
     public class Test extends Sprite
@@ -9,7 +9,7 @@ package {
         public function Test()
         {
         	
-			QRIteration.Test();     
+			Jacobi.Test();     
         }
     }
 

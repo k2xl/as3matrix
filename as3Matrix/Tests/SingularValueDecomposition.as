@@ -3,8 +3,8 @@ package {
     
     import flash.display.Sprite;
     
-    import src.math.as3Matrix.Matrix;
-    import src.math.as3Matrix.Vector;
+    import src.Matrix;
+    import src.Vector;
     public class Test extends Sprite
     {
         public function Test()
