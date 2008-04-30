@@ -1,8 +1,8 @@
 package src.Dimensions
 {
-	import src.math.as3Matrix.Matrix;
-	import src.math.as3Matrix.Vector;
-	import src.math.as3Matrix.errors.MatrixInverseError;
+	import src.Matrix;
+	import src.Vector;
+	import src.errors.MatrixInverseError;
 	
 	public class Matrix2x2 extends MatrixMxM
 	{

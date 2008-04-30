@@ -2,8 +2,8 @@ package Tests
 {
 	import flash.utils.getTimer;
 	
-	import src.math.as3Matrix.Matrix;
-	import src.math.as3Matrix.Vector;
+	import src.Matrix;
+	import src.Vector;
 	
 	public class SingularValue
 	{

@@ -1,8 +1,7 @@
 package Tests
 {
-    import src.math.as3Matrix.Matrix;
-    import src.math.as3Matrix.Vector;
-    
+    import src.Matrix;
+    import src.Vector;
     public class Jacobi
     {
         public static function Test():void
