@@ -1,8 +1,8 @@
 package Tests
 {
-	import src.Decompositions.QR;
-	import src.Matrix;
-	import src.Vector;
+	import src.math.as3Matrix.Decompositions.QR;
+	import src.math.as3Matrix.Matrix;
+	import src.math.as3Matrix.Vector;
 	
 	public class QRIteration
 	{

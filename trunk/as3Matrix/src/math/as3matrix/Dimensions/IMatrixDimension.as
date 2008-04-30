@@ -1,10 +1,10 @@
 package src.Dimensions
 {
-	import src.Decompositions.LU;
-	import src.Decompositions.QR;
-	import src.Decompositions.SVD;
-	import src.Matrix;
-	import src.Vector;
+	import src.math.as3Matrix.Decompositions.LU;
+	import src.math.as3Matrix.Decompositions.QR;
+	import src.math.as3Matrix.Decompositions.SVD;
+	import src.math.as3Matrix.Matrix;
+	import src.math.as3Matrix.Vector;
 	
 	public interface IMatrixDimension
 	{

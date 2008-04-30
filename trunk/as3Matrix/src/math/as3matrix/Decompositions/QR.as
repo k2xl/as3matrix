@@ -3,8 +3,8 @@
  */
 package src.Decompositions
 {
-	import src.Matrix;
-	import src.Vector;
+	import src.math.as3Matrix.Matrix;
+	import src.math.as3Matrix.Vector;
 	
 	public class QR
 	{

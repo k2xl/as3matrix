@@ -6,15 +6,15 @@
  */
 package src
 {	
-	import src.Decompositions.QR;
-	import src.Decompositions.SVD;
-	import src.Dimensions.IMatrixDimension;
-	import src.Dimensions.Matrix2x2;
-	import src.Dimensions.Matrix3x3;
-	import src.Dimensions.MatrixMxM;
-	import src.Dimensions.MatrixMxN;
-	import src.errors.MatrixError;
-	import src.errors.MatrixLockError;
+	import src.math.as3Matrix.Decompositions.QR;
+	import src.math.as3Matrix.Decompositions.SVD;
+	import src.math.as3Matrix.Dimensions.IMatrixDimension;
+	import src.math.as3Matrix.Dimensions.Matrix2x2;
+	import src.math.as3Matrix.Dimensions.Matrix3x3;
+	import src.math.as3Matrix.Dimensions.MatrixMxM;
+	import src.math.as3Matrix.Dimensions.MatrixMxN;
+	import src.math.as3Matrix.errors.MatrixError;
+	import src.math.as3Matrix.errors.MatrixLockError;
 	
 	public class Matrix
 	{
